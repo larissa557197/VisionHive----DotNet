@@ -1,34 +1,67 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
+using VisionHive.Infrastructure.Contexts;
 namespace VisionHive.API;
 
 public class Program
 {
     public static void Main(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);
+            var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
+            // Add services to the container.
+            builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
+            builder.Services.AddEndpointsApiExplorer();
 
-        builder.Services.AddControllers();
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(swagger =>
+            {
+                swagger.SwaggerDoc("v1", new OpenApiInfo()
+                {
+                    Title = "API para cadastro de Motos e �reas",
+                    Version = "v1",
+                    Description = "API desenvolvida para a empresa Mottu - Projeto Vision Hive\n\n" +
+                  "Integrantes:\n" +
+                  "� Larissa Muniz (RM557197) \n" +
+                  "� Jo�o Victor Michaeli (RM555678) \n" +
+                  "� Henrique Garcia (RM558062) ",
+                    //Contact = new OpenApiContact
+                    //{
+                    //    Name = "Larissa Muniz",
+                    //    Email = "larissampmuniz@gmail.com"
+                    //}
+                });
 
-        var app = builder.Build();
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
 
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
+                // Incluir os coment�rios no Swagger
+                swagger.IncludeXmlComments(xmlPath);
+            });
+
+            // Configura��o do banco de dados
+            builder.Services.AddDbContext<VisionHiveContext>(options =>
+            {
+                options.UseOracle(builder.Configuration.GetConnectionString("Oracle"));
+            });
+
+            var app = builder.Build();
+
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseHttpsRedirection();
+
+            app.UseAuthorization();
+
+            app.MapControllers();
+
+            app.Run();
         }
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-
-        app.MapControllers();
-
-        app.Run();
     }
-}

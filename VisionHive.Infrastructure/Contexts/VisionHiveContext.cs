@@ -1,4 +1,6 @@
-﻿using VisionHive.Infrastructure.Mappings;
+﻿using Microsoft.EntityFrameworkCore;
+using VisionHive.Domain.Entities;
+using VisionHive.Infrastructure.Mappings;
 namespace VisionHive.Infrastructure.Contexts
 {
     public class VisionHiveContext(DbContextOptions<VisionHiveContext> options) : DbContext(options)

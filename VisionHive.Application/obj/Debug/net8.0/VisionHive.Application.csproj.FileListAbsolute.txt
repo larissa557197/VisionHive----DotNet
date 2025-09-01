@@ -1,0 +1,15 @@
+C:\Users\joaov\Documents\FIAP\Cp4-DotNet\VisionHive.Application\bin\Debug\net8.0\VisionHive.Application.deps.json
+C:\Users\joaov\Documents\FIAP\Cp4-DotNet\VisionHive.Application\bin\Debug\net8.0\VisionHive.Application.dll
+C:\Users\joaov\Documents\FIAP\Cp4-DotNet\VisionHive.Application\bin\Debug\net8.0\VisionHive.Application.pdb
+C:\Users\joaov\Documents\FIAP\Cp4-DotNet\VisionHive.Application\obj\Debug\net8.0\VisionHive.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\joaov\Documents\FIAP\Cp4-DotNet\VisionHive.Application\obj\Debug\net8.0\VisionHive.Application.AssemblyInfoInputs.cache
+C:\Users\joaov\Documents\FIAP\Cp4-DotNet\VisionHive.Application\obj\Debug\net8.0\VisionHive.Application.AssemblyInfo.cs
+C:\Users\joaov\Documents\FIAP\Cp4-DotNet\VisionHive.Application\obj\Debug\net8.0\VisionHive.Application.csproj.CoreCompileInputs.cache
+C:\Users\joaov\Documents\FIAP\Cp4-DotNet\VisionHive.Application\obj\Debug\net8.0\VisionHive.Application.sourcelink.json
+C:\Users\joaov\Documents\FIAP\Cp4-DotNet\VisionHive.Application\obj\Debug\net8.0\VisionHive.Application.dll
+C:\Users\joaov\Documents\FIAP\Cp4-DotNet\VisionHive.Application\obj\Debug\net8.0\refint\VisionHive.Application.dll
+C:\Users\joaov\Documents\FIAP\Cp4-DotNet\VisionHive.Application\obj\Debug\net8.0\VisionHive.Application.pdb
+C:\Users\joaov\Documents\FIAP\Cp4-DotNet\VisionHive.Application\obj\Debug\net8.0\ref\VisionHive.Application.dll
+C:\Users\joaov\Documents\FIAP\Cp4-DotNet\VisionHive.Application\bin\Debug\net8.0\VisionHive.Application.runtimeconfig.json
+C:\Users\joaov\Documents\FIAP\Cp4-DotNet\VisionHive.Application\obj\Debug\net8.0\VisionHive.Application.csproj.AssemblyReference.cache
+C:\Users\joaov\Documents\FIAP\Cp4-DotNet\VisionHive.Application\obj\Debug\net8.0\VisionHive.Application.genruntimeconfig.cache
