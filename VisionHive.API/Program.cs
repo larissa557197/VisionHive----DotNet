@@ -20,18 +20,13 @@ public class Program
             {
                 swagger.SwaggerDoc("v1", new OpenApiInfo()
                 {
-                    Title = "API para cadastro de Motos e �reas",
+                    Title = "API para cadastro de Motos e areas",
                     Version = "v1",
                     Description = "API desenvolvida para a empresa Mottu - Projeto Vision Hive\n\n" +
                   "Integrantes:\n" +
-                  "� Larissa Muniz (RM557197) \n" +
-                  "� Jo�o Victor Michaeli (RM555678) \n" +
-                  "� Henrique Garcia (RM558062) ",
-                    //Contact = new OpenApiContact
-                    //{
-                    //    Name = "Larissa Muniz",
-                    //    Email = "larissampmuniz@gmail.com"
-                    //}
+                  " Larissa Muniz (RM557197) \n" +
+                  " Joao Victor Michaeli (RM555678) \n" +
+                  " Henrique Garcia (RM558062) ",
                 });
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
