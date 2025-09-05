@@ -5,6 +5,11 @@
         public Guid Id { get; set; }
         public string Nome { get; set; }
         public int LimiteMotos { get; set; }
-        public List<MotoResponse> Motos { get; set; }
+        
+        // relacionamento com Filial
+        public Guid FilialId { get; set; }
+        // nome da filial
+        public string Filial { get; set; } = default!;
+        public List<MotoResponse> Motos { get; set; } = new();
     }
 }

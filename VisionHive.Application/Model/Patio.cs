@@ -2,17 +2,16 @@
 {
     public class Patio
     {
+        protected Patio(){}
         public Guid Id { get; private set; }
-
         public string Nome { get; private set; }
-
         public int LimiteMotos { get; private set; } = 100; // limite de 100 motos por patio 
 
         // relacionamento com filial
         public Guid FilialId { get; private set; }
         public Filial Filial { get; private set; }
 
-        public List<Moto> Motos { get; private set; }
+        public ICollection<Moto> Motos { get; private set; } = new List<Moto>();
 
 
         

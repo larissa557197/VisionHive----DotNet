@@ -2,12 +2,14 @@
 {
     public class Filial
     {
+        
+        protected Filial(){}
         public Guid Id {  get; private set; }
         public string Nome { get; private set; }
         public string Bairro { get; private set; }
         public string Cnpj { get; private set; }
 
-        public List<Patio> Patios { get; private set; }
+        public ICollection<Patio> Patios { get; set; } = new List<Patio>();
 
         public Filial(string nome, string bairro, string cnpj)
         {
