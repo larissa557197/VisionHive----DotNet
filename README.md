@@ -210,7 +210,8 @@ VisionHive.API.Test/         # Projeto de testes (placeholder)
 ---
 
 ## Integrantes
-|        NOME          |   RM   |
-| João Victor Michaeli | 555678 |
-| Henrique  Garcia     | 558062 |
-| Larissa Muniz        | 557197 |
+|       NOME            |    RM    | 
+|-----------------------|----------|
+| João Victor Michaeli  |  555678  |
+| Henrique  Garcia      |  558062  |
+| Larissa Muniz         |  557197  |
