@@ -1,331 +1,213 @@
-#  VisionHive API
+# VisionHive API
 
-A **VisionHive** é uma API RESTful desenvolvida para registrar e acompanhar denúncias ambientais. A aplicação organiza usuários, denúncias, localizações e órgãos públicos de forma estruturada, facilitando o monitoramento e fiscalização dos problemas ambientais reportados.
-
----
-
-## 🔗 Endpoints Disponíveis
-
-### 👤 Usuário
-| Verbo | Rota                | Descrição                                           |
-|-------|---------------------|-----------------------------------------------------|
-| GET   | `/api/Usuario`      | Lista todos os usuários                             |
-| POST  | `/api/Usuario`      | Cadastra um novo usuário                            |
-| GET   | `/api/Usuario/{id}` | Detalha um usuário por ID                           |
-| PUT   | `/api/Usuario/{id}` | Atualiza dados de um usuário existente              |
-| DELETE| `/api/Usuario/{id}` | Remove um usuário do sistema                        |
-
-### 🏛️ Órgão Público
-| Verbo | Rota                     | Descrição                                      |
-|-------|--------------------------|------------------------------------------------|
-| GET   | `/api/OrgaoPublico`      | Lista todos os órgãos públicos                 |
-| POST  | `/api/OrgaoPublico`      | Cadastra um novo órgão público                 |
-| GET   | `/api/OrgaoPublico/{id}` | Detalha um órgão público por ID                |
-| PUT   | `/api/OrgaoPublico/{id}` | Atualiza dados de um órgão público existente   |
-| DELETE| `/api/OrgaoPublico/{id}` | Remove um órgão público                        |
-
-### 📍 Localização
-| Verbo | Rota                     | Descrição                                      |
-|-------|--------------------------|------------------------------------------------|
-| GET   | `/api/Localizacao`       | Lista todas as localizações                    |
-| POST  | `/api/Localizacao`       | Registra uma nova localização                  |
-| GET   | `/api/Localizacao/{id}`  | Detalha uma localização por ID                 |
-| PUT   | `/api/Localizacao/{id}`  | Atualiza dados de uma localização existente    |
-| DELETE| `/api/Localizacao/{id}`  | Remove uma localização                         |
-
-### 🗺️ Estados
-| Verbo | Rota                     | Descrição                                      |
-|-------|--------------------------|------------------------------------------------|
-| GET   | `/api/Estado`            | Lista todos os estados                         |
-| POST  | `/api/Estado`            | Registra um novo estado                        |
-| GET   | `/api/Estado/{id}`       | Detalha um estado por ID                       |
-| PUT   | `/api/Estado/{id}`       | Atualiza dados de um estado existente          |
-| DELETE| `/api/Estado/{id}`       | Remove um estado                               |
-
-### 🧾 Denúncia
-| Verbo | Rota                   | Descrição                                        |
-|-------|------------------------|--------------------------------------------------|
-| GET   | `/api/Denuncia`        | Lista todas as denúncias                         |
-| POST  | `/api/Denuncia`        | Registra uma nova denúncia                       |
-| GET   | `/api/Denuncia/{id}`   | Detalha uma denúncia por ID                      |
-| PUT   | `/api/Denuncia/{id}`   | Atualiza dados de uma denúncia existente         |
-| DELETE| `/api/Denuncia/{id}`   | Remove uma denúncia                              |
-
-### 🏙️ Cidades
-| Verbo | Rota                | Descrição                                           |
-|-------|---------------------|-----------------------------------------------------|
-| GET   | `/api/Cidade`       | Lista todas as cidades                              |
-| POST  | `/api/Cidade`       | Registra uma nova cidade                            |
-| GET   | `/api/Cidade/{id}`  | Detalha uma cidade por ID                           |
-| PUT   | `/api/Cidade/{id}`  | Atualiza dados de uma cidade existente              |
-| DELETE| `/api/Cidade/{id}`  | Remove uma cidade                                   |
-
-### 🏘️ Bairros
-| Verbo | Rota                | Descrição                                           |
-|-------|---------------------|-----------------------------------------------------|
-| GET   | `/api/Bairro`       | Lista todos os bairros                              |
-| POST  | `/api/Bairro`       | Registra um novo bairro                             |
-| GET   | `/api/Bairro/{id}`  | Detalha um bairro por ID                            |
-| PUT   | `/api/Bairro/{id}`  | Atualiza dados de um bairro existente               |
-| DELETE| `/api/Bairro/{id}`  | Remove um bairro                                    |
-
-### 📊 Acompanhamento de Denúncia
-| Verbo | Rota                                 | Descrição                                     |
-|-------|--------------------------------------|-----------------------------------------------|
-| GET   | `/api/AcompanhamentoDenuncia`        | Lista todos os acompanhamentos                |
-| POST  | `/api/AcompanhamentoDenuncia`        | Cria novo acompanhamento                      | 
-| GET   | `/api/AcompanhamentoDenuncia/{id}`   | Detalha um acompanhamento por ID              |
-| PUT   | `/api/AcompanhamentoDenuncia/{id}`   | Atualiza dados de um acompanhamento por ID    |
-| DELETE| `/api/AcompanhamentoDenuncia/{id}`   | Remove um acompanhamento                      |
+API RESTful em .NET 8 para gestão de **Filiais**, **Pátios** e **Motos**
+A solução segue boas práticas de arquitetura em camadas (Domain / Application / Infrastructure / API) e expõe endpoints CRUD para o domínio abaixo.
 
 ---
 
-## 🛠 Tecnologias Utilizadas
+## 1) Descrição do domínio
 
-- ASP.NET Core 8 Web API
-- Entity Framework Core
-- Banco de Dados Oracle
-- Swagger (OpenAPI)
-- Serialização JSON com ReferenceHandler.IgnoreCycles
+O domínio representa a operação de pátios de motos em diferentes **filiais**:
+- **Filial**: unidade física identificada por *Nome*, *Bairro* e *CNPJ*; pode conter vários pátios.
+- **Pátio**: área de guarda de motos, com *Nome*, *LimiteMotos* e vínculo com uma filial.
+- **Moto**: veículo identificado por *Placa*, *Chassi*, *Número do Motor* e uma *Prioridade* (Baixa/Media/Alta/Sucata), sempre alocada a um pátio.
+
+Relações principais:
+- 1 **Filial** → N **Pátios**
+- 1 **Pátio** → N **Motos**
 
 ---
 
-## 🧪 Exemplos de Testes
+## 2) Instruções de execução
 
-### 🔹 Criar Usuário
+### Requisitos
+- .NET SDK 8.0+
+- Banco Oracle acessível (ou ajustar o appsettings para sua instância)
+- (Opcional) Ferramentas EF Core: `dotnet tool install --global dotnet-ef`
 
+### Passos
+
+1. **Clonar o repositório**
+```bash
+git clone <seu-fork-ou-repo>
+cd Cp4-DotNet-main/Cp4-DotNet-main
+```
+
+2. **Configurar a connection string do Oracle**  
+Edite `VisionHive.API/appsettings.json` e ajuste `ConnectionStrings:Oracle` para seu usuário/senha/host:
 ```json
-POST /api/Usuario
-{
-  "nome": "João Silva",
-  "email": "joao@email.com",
-  "senha": "123456",
-  "tipoUsuario": "USER"
+"ConnectionStrings": {
+  "Oracle": "Data Source=<host>:<port>/<service_name>;User ID=<USUARIO>;Password=<SENHA>;"
 }
 ```
 
-### 🔹 Criar Órgão Público
-
-```json
-POST /api/OrgaoPublico
-{
-  "nome": "Secretaria do Meio Ambiente MG",
-  "areaAtuacao": "Ambiental"
-}
+3. **Restaurar e compilar**
+```bash
+dotnet restore
+dotnet build
 ```
 
-### 🔹 Criar Localização
-
-```json
-POST /api/Localizacao
-{
-  "logradouro": "Av Paulista",
-  "numero": "1106",
-  "complemento": "5º andar",
-  "cep": "01311-000",
-  "idBairro": "GUID_DO_BAIRRO"
-}
+4. **Aplicar migrations** (cria/atualiza as tabelas no Oracle)
+> Execute a partir da pasta `Cp4-DotNet-main/Cp4-DotNet-main`:
+```bash
+dotnet ef database update   --project VisionHive.Infrastructure   --startup-project VisionHive.API
 ```
 
-### 🔹 Criar Estado
-
-```json
-POST /api/Estado
-{
-  "nome": "Santa Catarina",
-  "uf": "SC"
-}
+5. **Rodar a API**
+```bash
+dotnet run --project VisionHive.API
 ```
+Por padrão a API sobe em `https://localhost:7072` e `http://localhost:5255` (ajustado pelo `launchSettings.json` do seu ambiente).
 
-### 🔹 Criar Denúncia
-
-```json
-POST /api/Denuncia
-{
-  "idUsuario": "GUID_DO_USUARIO",
-  "idLocalizacao": "GUID_DA_LOCALIZACAO",
-  "idOrgaoPublico": "GUID_DO_ORGAO",
-  "dataHora": "2025-06-02T16:03:04.057Z",
-  "descricao": "Descarte de resíduos tóxicos próximo ao rio."
-}
+6. **Swagger**
+Em ambiente *Development*, acesse:
 ```
-
-### 🔹 Criar Cidade
-
-```json
-POST /api/Cidade
-{
-  "nome": "Campinas",
-  "idEstado": "GUID_DO_ESTADO"
-}
-```
-
-### 🔹 Criar Bairro
-
-```json
-POST /api/Bairro
-{
-  "nome": "Taquaral",
-  "idCidade": "GUID_DA_CIDADE"
-}
-```
-
-### 🔹 Criar Acompanhamento
-
-```json
-POST /api/acompanhamentodenuncia
-{
-  "status": "EmAndamento",
-  "dataAtualizacao": "2025-06-02T16:40:00.000Z",
-  "observacao": "A prefeitura iniciou a limpeza.",
-  "denunciaId": "GUID_DA_DENUNCIA"
-}
+https://localhost:7072/swagger
 ```
 
 ---
 
-## 🚀 Instruções de Execução
+## 3) Exemplos de requisições
 
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/larissa557197/EcoDenuncia-gs-DotNet.git 
-   ```
+### Entidades e DTOs
+**Filial**
+- Request (`POST /api/Filial`)
+```json
+{
+  "nome": "Filial Lapa",
+  "bairro": "Lapa",
+  "cnpj": "12.345.678/0001-99"
+}
+```
 
-2. Configure a string de conexão Oracle no `appsettings.json` :
-   ```json
-   "ConnectionStrings": {
-    "Oracle": "Data Source=oracle.fiap.com.br:1521/orcl;User ID=RMXXXXXX;Password=XXXXXX;"
-   }
-   ```
-   > ID= `SEU_RM` - Exemplo: RM123456, Password= `SUA_SENHA_ORACLE` - Exemplo: 123456
+- Response (exemplo)
+```json
+{
+  "id": "e4d7ec2c-9e36-4a19-9d1e-2d4f9c2e5b11",
+  "nome": "Filial Lapa",
+  "bairro": "Lapa",
+  "cnpj": "12.345.678/0001-99",
+  "patios": []
+}
+```
 
-3. Aplique as migrations:
-   ```bash
-   dotnet ef database update
-   ```
+**Pátio**
+- Request (`POST /api/Patio`)
+```json
+{
+  "nome": "Pátio A",
+  "limiteMotos": 120,
+  "filialId": "e4d7ec2c-9e36-4a19-9d1e-2d4f9c2e5b11"
+}
+```
 
-4. Execute o projeto:
-   ```bash
-   dotnet run
-   ```
+**Moto**
+- Request (`POST /api/Moto`)
+```json
+{
+  "placa": "ABC1D23",
+  "chassi": "9BWZZZ377VT004251",
+  "numeroMotor": "MTR-998877",
+  "prioridade": 2,
+  "patioId": "8c2c6a7f-0459-4b37-b9e0-8b1f4bf1f111"
+}
+```
+> **Prioridade**: 1=Baixa, 2=Media, 3=Alta, 4=Sucata
 
-5. Acesse a documentação:
-   ```
-   http://localhost:{porta}/swagger/index.html
-   ```
----
+### Rotas por recurso
 
-## 🧩 Diagramas do Projeto
+#### Filial (`/api/Filial`)
+| Método | Rota                  | Descrição                     |
+|-------:|-----------------------|-------------------------------|
+| GET    | `/api/Filial`         | Lista todas as filiais        |
+| GET    | `/api/Filial/{id}`    | Busca filial por ID (GUID)    |
+| POST   | `/api/Filial`         | Cria uma filial               |
+| PUT    | `/api/Filial/{id}`    | Atualiza uma filial           |
+| DELETE | `/api/Filial/{id}`    | Remove uma filial             |
 
-O projeto está respaldado por uma estrutura bem definida, com diagramas que facilitam a compreensão:
+**Exemplos cURL**
+```bash
+# GET todas
+curl -s http://localhost:5255/api/Filial
 
-- ### 🗺️ **Diagrama Entidade-Relacionamento (DER)**:
-  - #### Representa as relações entre:
-     ```
-     Denuncia, Usuario, Localizacao, OrgaoPublico, AcompanhamentoDenuncia, Bairro, Cidade e Estado.
-     ```
-    - #### 📦 Entidades e Relacionamentos
-       - 🧾 Denuncia:
-         - `IdUsuario` → 🔗 `Usuario.IdUsuario`
-         - `IdLocalizacao` → 🔗 `Localizacao.IdLocalizacao`
-         - `IdOrgaoPublico` → 🔗 `OrgaoPublico.IdOrgaoPublico`
-        - 📍 Localizacao:
-          - `IdBairro` → 🔗 `Bairro.IdBairro`
-        - 🏘️ Bairro:
-          - `IdCidade` → 🔗 `Cidade.IdCidade`
-        - 🏙️ Cidade:
-          - `IdEstado` → 🔗 `Estado.IdEstado`
-  
+# GET por ID
+curl -s http://localhost:5255/api/Filial/00000000-0000-0000-0000-000000000000
 
-### 🧩 Relações:
+# POST
+curl -s -X POST http://localhost:5255/api/Filial   -H "Content-Type: application/json"   -d '{"nome":"Filial Centro","bairro":"Centro","cnpj":"11.222.333/0001-44"}'
 
-| Entidade     | Relacionamento com           |   Tipo    |
-|--------------|------------------------------|-----------|
-| Denuncia     |      Usuario                 |    N:1    |
-| Denuncia     |      Localizacao             |    N:1    |
-| Denuncia     |      OrgaoPublico            |    N:1    |
-| Denuncia     |      AcompanhamentoDenuncia  |    1:N    |
-| Localizacao  |      Bairro                  |    N:1    |
-| Bairro       |      Cidade                  |    N:1    |
-| Cidade       |      Estado                  |    N:1    |
+# PUT
+curl -s -X PUT http://localhost:5255/api/Filial/00000000-0000-0000-0000-000000000000   -H "Content-Type: application/json"   -d '{"nome":"Filial Centro Atualizada","bairro":"Centro","cnpj":"11.222.333/0001-44"}'
 
+# DELETE
+curl -s -X DELETE http://localhost:5255/api/Filial/00000000-0000-0000-0000-000000000000
+```
 
-## 🧠 Arquitetura em Camadas
+#### Pátio (`/api/Patio`)
+| Método | Rota                 | Descrição                    |
+|-------:|----------------------|------------------------------|
+| GET    | `/api/Patio`         | Lista todos os pátios        |
+| GET    | `/api/Patio/{id}`    | Busca pátio por ID (GUID)    |
+| POST   | `/api/Patio`         | Cria um pátio                |
+| PUT    | `/api/Patio/{id}`    | Atualiza um pátio            |
+| DELETE | `/api/Patio/{id}`    | Remove um pátio              |
 
-A solução segue o modelo de arquitetura em camadas com responsabilidades bem definidas:
+**Exemplo GET pátios (response resumido)**
+```json
+[
+  {
+    "id": "8c2c6a7f-0459-4b37-b9e0-8b1f4bf1f111",
+    "nome": "Pátio A",
+    "limiteMotos": 120,
+    "filialId": "e4d7ec2c-9e36-4a19-9d1e-2d4f9c2e5b11",
+    "filial": "Filial Lapa",
+    "motos": []
+  }
+]
+```
 
-### 📁 Controllers
+#### Moto (`/api/Moto`)
+| Método | Rota                | Descrição                  |
+|-------:|---------------------|----------------------------|
+| GET    | `/api/Moto`         | Lista todas as motos       |
+| GET    | `/api/Moto/{id}`    | Busca moto por ID (GUID)   |
+| POST   | `/api/Moto`         | Cria uma moto              |
+| PUT    | `/api/Moto/{id}`    | Atualiza uma moto          |
+| DELETE | `/api/Moto/{id}`    | Remove uma moto            |
 
-* Expõem os endpoints da API REST `(GET, POST, PUT, DELETE)`.
-* Chamam os métodos do domínio e lidam com DTOs para entrada e saída de dados.
-
-### 📁 Domain
-
-* Contém enums e regras de negócio.
-* Livre de dependências externas (como Entity Framework).
-* Ex: `StatusDenuncia`, `TipoUsuario`, classes de exceções.
-
-### 📁 DTO (Data Transfer Objects)
-
-* Objetos usados para transportar dados da API para o domínio e vice-versa.
-* Subdividido em:
-
-  * `Request`: dados enviados pelo cliente.
-  * `Response`: dados retornados ao cliente.
-
-### 📁 Infrastructure
-
-* Onde estão os detalhes da implementação, acesso a banco e persistência.
-
-#### 📁 Contexts
-
-* Contém a classe `EcoDenunciaContext` (herda de `DbContext`).
-* Define os `DbSet` de cada entidade e aplica configurações dos mapeamentos.
-
-#### 📁 Mappings
-
-* Contém as classes de configuração das entidades para o banco.
-* Usa `IEntityTypeConfiguration<T>` para definir tabelas, tamanhos, chaves, relacionamentos etc.
-
-#### 📁 Persistence
-
-* Contém as **entidades** que representam as tabelas no banco Oracle.
-* Cada entidade encapsula suas validações e métodos como `Create` ou `Atualizar`.
-
-#### 📁 Repositories *(opcional)*
-
-* Implementa o padrão **Repository Pattern** para abstrair o acesso ao banco.
-* Facilita testes e manutenção.
-
-### 📁 Migrations
-
-* Geradas pelo Entity Framework Core.
-* Representam as versões do banco de dados e permitem aplicar alterações via `dotnet ef`.
-
-### 📄 appsettings.json / appsettings.Development.json
-
-* Contêm configurações da aplicação, como string de conexão Oracle.
-
-### 📄 Program.cs
-
-* Arquivo principal de inicialização do ASP.NET Core.
-* Registra serviços, middlewares e configura Swagger, contexto, CORS, etc.
-
-### 📄 README.md
-
-* Documentação geral do projeto, com instruções, exemplos de uso e arquitetura.
-
+**Exemplo GET motos (response resumido)**
+```json
+[
+  {
+    "id": "4b05db6c-bb7a-4d07-8e2b-3c1b8c9f1234",
+    "placa": "ABC1D23",
+    "chassi": "9BWZZZ377VT004251",
+    "numeroMotor": "MTR-998877",
+    "prioridade": "Media",
+    "patio": "Pátio A"
+  }
+]
+```
 
 ---
 
-## 👥 Integrantes
-
-| Nome             | RM       |
-|------------------|----------|
-| Larissa Muniz    | RM557197 |
-| João V. Michaeli | RM555678 |
-| Henrique Garcia  | RM558062 |
+## Estrutura do repositório (resumo)
+```
+VisionHive.Domain/           # Entidades de domínio
+VisionHive.Application/      # DTOs, Enums e contratos
+VisionHive.Infrastructure/   # EF Core, Mappings, Migrations, Context
+VisionHive.API/              # Controllers, Program.cs, Swagger
+VisionHive.API.Test/         # Projeto de testes (placeholder)
+```
 
 ---
 
-> Projeto acadêmico desenvolvido na FIAP — 2º Semestre
+## Observações
+- Swagger com Anotações de resposta (`ProducesResponseType`) já configurado.
+- EF Core com provedor **Oracle** via `UseOracle(...)` em `Program.cs`.
+- Campos de **Prioridade** aceitam inteiros 1–4 de acordo com o enum.
+
+---
+
+## Equipe (opcional)
+- Nome(s) e RM(s) dos integrantes.
