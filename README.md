@@ -1,6 +1,6 @@
 #  VisionHive API
 
-A **EcoDenuncia** é uma API RESTful desenvolvida para registrar e acompanhar denúncias ambientais. A aplicação organiza usuários, denúncias, localizações e órgãos públicos de forma estruturada, facilitando o monitoramento e fiscalização dos problemas ambientais reportados.
+A **VisionHive** é uma API RESTful desenvolvida para registrar e acompanhar denúncias ambientais. A aplicação organiza usuários, denúncias, localizações e órgãos públicos de forma estruturada, facilitando o monitoramento e fiscalização dos problemas ambientais reportados.
 
 ---
 
