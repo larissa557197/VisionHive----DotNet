@@ -117,16 +117,16 @@ namespace VisionHive.API.Controllers
             var moto = await _context.Motos.FindAsync(new object?[] { id }, ct);
             if (moto is null) return NotFound();
 
-            // valida pátio alvo
-            var patioExiste = await _context.Patios
+            var patioCount = await _context.Patios
                 .AsNoTracking()
-                .AnyAsync(p => p.Id == request.PatioId, ct);
+                .Where(p => p.Id == request.PatioId)
+                .CountAsync(ct);
 
-            if (!patioExiste)
+            if (patioCount == 0)
                 return NotFound("Pátio informado não existe.");
 
             moto.AtualizarDados(request.Placa, request.Chassi, request.NumeroMotor, request.Prioridade, request.PatioId);
-            await _context.SaveChangesAsync(ct); // tracked; não precisa Update
+            await _context.SaveChangesAsync(ct);
 
             return NoContent();
         }
