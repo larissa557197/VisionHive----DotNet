@@ -19,6 +19,7 @@
     
     <ItemGroup>
         <ProjectReference Include="..\VisionHive.Domain\VisionHive.Domain.csproj" />
+        <ProjectReference Include="..\VisionHive.Infrastructure\VisionHive.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
