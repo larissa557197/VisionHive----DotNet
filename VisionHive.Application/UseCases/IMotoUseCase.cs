@@ -11,8 +11,9 @@ public interface IMotoUseCase
     // retorna lista paginada de motos com filtros e ordenação
     Task<PageResult<Moto>> GetPagination(MotoPaginatedRequest request);
     
+    /// busca uma moto específica pelo ID
     Task<Moto?> GetByIdAsync(Guid id);
-    // busca uma moto específica pelo ID
+    
     Task<Moto?> CreateAsync(MotoRequest request);
     
     // atualiza uma moto existente
