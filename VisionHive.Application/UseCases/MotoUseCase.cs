@@ -21,6 +21,12 @@ public class MotoUseCase(IMotoRepository motoRepository) : IMotoUseCase
         
     }
 
+    public async Task<Moto?> GetByIdAsync(Guid id)
+    {
+        return await motoRepository.GetByIdAsync(id);
+    }
+    
+
     public async Task<Moto> CreateAsync(MotoRequest request)
     {
         // regra: precisa ter pelo menos um identificador
