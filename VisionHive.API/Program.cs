@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using VisionHive.Application;
+using VisionHive.Infrastructure;
 using VisionHive.Infrastructure.Contexts;
 namespace VisionHive.API;
 
@@ -10,12 +12,13 @@ public class Program
     {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // Controllers + JSON options
             builder.Services.AddControllers()
                 .AddJsonOptions(options =>
                 options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
+            
+            // Swagger/OpenAPI
             builder.Services.AddEndpointsApiExplorer();
-
             builder.Services.AddSwaggerGen(swagger =>
             {
                 swagger.SwaggerDoc("v1", new OpenApiInfo()
@@ -29,19 +32,27 @@ public class Program
                   " Henrique Garcia (RM558062) ",
                 });
 
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                // comentários XML para gerar documentação dos métodos/classes
+                var xmls = new[]
+                {
+                    $"{Assembly.GetExecutingAssembly().GetName().Name}.xml",
+                    "VisionHive.Application.xml",
+                    "VisionHive.Domain.xml",
+                    "VisionHive.Infrastructure.xml"
+                };
 
-                // Incluir os coment�rios no Swagger
-                swagger.IncludeXmlComments(xmlPath);
+                foreach (var file in xmls)
+                {
+                    var path = Path.Combine(AppContext.BaseDirectory, file);
+                    if (File.Exists(path))
+                        swagger.IncludeXmlComments(path);
+                }
             });
-
-            // Configura��o do banco de dados
-            builder.Services.AddDbContext<VisionHiveContext>(options =>
-            {
-                options.UseOracle(builder.Configuration.GetConnectionString("Oracle"));
-            });
-
+                
+            // registra Infra (DbContext + repositórios ) e Application (use cases)
+            builder.Services.AddInfrastructure(builder.Configuration);
+            builder.Services.AddApplication();
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
