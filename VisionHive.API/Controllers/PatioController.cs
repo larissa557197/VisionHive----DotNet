@@ -9,7 +9,7 @@ using VisionHive.Infrastructure.Contexts;
 /// <summary>Endpoints REST para a entidade Pátio.</summary>
 namespace VisionHive.API.Controllers
 {
-    [Route("api/")]
+    [Route("api/v1/patios")]
     //[Tags("Patios")]
     [ApiController]
     public class PatioController(IPatioUseCase patioUseCase) : ControllerBase
