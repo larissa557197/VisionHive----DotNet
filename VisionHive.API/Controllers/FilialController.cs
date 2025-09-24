@@ -4,6 +4,7 @@ using System.Net;
 using VisionHive.Application.DTO.Request;
 using VisionHive.Application.DTO.Response;
 using VisionHive.Application.UseCases;
+using VisionHive.Domain.Pagination;
 using VisionHive.Infrastructure.Contexts;
 
 namespace VisionHive.API.Controllers
@@ -39,20 +40,44 @@ namespace VisionHive.API.Controllers
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> GetPaginate([FromQuery] FilialPaginatedRequest query)
+        public async Task<ActionResult<PageResult<FilialResponse>>> GetPaginate([FromQuery] FilialPaginatedRequest query)
         {
-            var result = await filialUseCase.GetPagination(query);
-            return Ok(result);
+            var page = await filialUseCase.GetPagination(query);
+            var mapped = new PageResult<FilialResponse>
+            {
+                Items = page.Items.Select(f => new FilialResponse
+                {
+                    Id = f.Id,
+                    Nome = f.Nome,
+                    Bairro = f.Bairro,
+                    Cnpj = f.Cnpj,
+                    Patios = f.Patios.Select(p => p.Nome).ToList()
+                }).ToList(),
+                Page = page.Page,
+                PageSize = page.PageSize,
+                Total = page.Total
+            };
+            return Ok(mapped);
         }
 
         /// <summary>Obtém uma filial por ID.</summary>
         [HttpGet("{id:guid}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<IActionResult> GetById(Guid id)
+        public async Task<ActionResult<FilialResponse>> GetById(Guid id)
         {
             var entity = await filialUseCase.GetByIdAsync(id);
-            return entity is null ? NotFound("Filial não encontrada") : Ok(entity);
+            if (entity is null) return NotFound("Filial não encontrada");
+
+            var dto = new FilialResponse
+            {
+                Id = entity.Id,
+                Nome = entity.Nome,
+                Bairro = entity.Bairro,
+                Cnpj = entity.Cnpj,
+                Patios = entity.Patios.Select(p => p.Nome).ToList()
+            };
+            return Ok(dto);
         }
         
         /// <summary>Atualiza uma filial existente.</summary>
