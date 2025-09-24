@@ -52,7 +52,11 @@ namespace VisionHive.API.Controllers
                     LimiteMotos = p.LimiteMotos,
                     FilialId = p.FilialId,
                     Filial = p.Filial?.Nome ?? string.Empty,
-                    Motos = p.Motos.Select(m => m.Placa ?? m.Chassi ?? m.NumeroMotor ?? "(sem id)").ToList()
+                    Motos = p.Motos.Select(m => new MotoResponse
+                    {
+                        Placa = m.Placa,
+                        Prioridade = m.Prioridade.ToString()
+                    }).ToList()
                 }).ToList(),
                 Page = page.Page,
                 PageSize = page.PageSize,
@@ -77,7 +81,11 @@ namespace VisionHive.API.Controllers
                 LimiteMotos = entity.LimiteMotos,
                 FilialId = entity.FilialId,
                 Filial = entity.Filial?.Nome ?? string.Empty,
-                Motos = entity.Motos.Select(m => m.Placa ?? m.Chassi ?? m.NumeroMotor ?? "(sem id)").ToList()
+                Motos = entity.Motos.Select(m => new MotoResponse
+                {
+                    Placa = m.Placa,
+                    Prioridade = m.Prioridade.ToString()
+                }).ToList()
             };
 
             return Ok(dto);
