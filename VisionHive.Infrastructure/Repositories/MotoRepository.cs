@@ -27,7 +27,9 @@ public sealed class MotoRepository(VisionHiveContext context) : IMotoRepository
         )
     {
         // query inicial: todas as motos, sem tracking (somente leitura)
-        var query = context.Motos.AsNoTracking();
+        var query = context.Motos
+            .Include(m => m.Patio)
+            .AsNoTracking();
         
         // se informou termo de busca, filtra por placa/chassi/número do motor
         if (!string.IsNullOrWhiteSpace(search))
@@ -66,6 +68,7 @@ public sealed class MotoRepository(VisionHiveContext context) : IMotoRepository
         // busca por chave primária
         return await context.Motos
             .AsNoTracking()
+            .Include(m => m.Patio)
             .FirstOrDefaultAsync(m => m.Id == id, ct);
     }
 
