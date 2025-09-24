@@ -7,6 +7,7 @@ using VisionHive.Application.DTO.Response;
 using VisionHive.Domain.Enums;
 using VisionHive.Application.UseCases;
 using VisionHive.Domain.Entities;
+using VisionHive.Domain.Pagination;
 using VisionHive.Infrastructure.Contexts;
 using VisionHive.Infrastructure.Repositories;
 
@@ -49,10 +50,27 @@ namespace VisionHive.API.Controllers
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> GetPaginate([FromQuery] MotoPaginatedRequest query)
+        public async Task<ActionResult<MotoResponse>> GetPaginate([FromQuery] MotoPaginatedRequest query)
         {
-            var result = await motoUseCase.GetPagination(query);
-            return Ok(result);
+            var page = await motoUseCase.GetPagination(query);
+            var mapped = new PageResult<MotoResponse>
+            {
+                Items = page.Items.Select(m => new MotoResponse
+                {
+                    Id = m.Id,
+                    Placa = m.Placa,
+                    Chassi = m.Chassi,
+                    NumeroMotor = m.NumeroMotor,
+                    Prioridade = m.Prioridade.ToString(),
+                    PatioId = m.PatioId,
+                    Patio = m.Patio?.Nome
+                }).ToList(),
+                Page = page.Page,
+                PageSize = page.PageSize,
+                Total = page.Total
+            };
+            
+            return Ok(mapped);
         }
 
         /// <summary>
@@ -64,7 +82,19 @@ namespace VisionHive.API.Controllers
         public async Task<IActionResult> GetById(Guid id)
         {
             var entity = await motoUseCase.GetByIdAsync(id);
-            return entity is null ? NotFound("Moto não encontrada") : Ok(entity);
+            if (entity is null) return NotFound("Moto não encontrada");
+
+            var dto = new MotoResponse
+            {
+                Id = entity.Id,
+                Placa = entity.Placa,
+                Chassi = entity.Chassi,
+                NumeroMotor = entity.NumeroMotor,
+                Prioridade = entity.Prioridade.ToString(),
+                PatioId = entity.PatioId,
+                Patio = entity.Patio?.Nome
+            };
+            return Ok(dto);
         }
 
 
