@@ -18,16 +18,13 @@ namespace VisionHive.Application.UseCases
             var page = request.PageNumber < 1 ? 1 : request.PageNumber;
             var pageSize = request.PageSize < 1 ? 10 : (request.PageSize > 100 ? 100 : request.PageSize);
 
-            return await filialRepository.GetPaginationAsync(page, pageSize, request.Search);
+           return await filialRepository.GetPaginationAsync(page, pageSize, request.Search);
         }
 
         public async Task<Filial?> GetByIdAsync(Guid id)
         {
             return await filialRepository.GetByIdAsync(id);
         }
-
-        
-        
         
         public async Task<Filial> CreateAsync(FilialRequest request)
         { 

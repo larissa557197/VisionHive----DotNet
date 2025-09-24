@@ -27,7 +27,9 @@ public sealed class FilialRepository(VisionHiveContext context) : IFilialReposit
     {
         
         // query base: leitura sem rastreamento
-        IQueryable<Filial> query = context.Filiais.AsNoTracking();
+        IQueryable<Filial> query = context.Filiais
+            .AsNoTracking()
+            .Include(f => f.Patios);
         
         // filtro por Nome, Bairro ou Cnpj
         if (!string.IsNullOrWhiteSpace(search))
@@ -63,11 +65,12 @@ public sealed class FilialRepository(VisionHiveContext context) : IFilialReposit
         };
     }
 
-    public async Task<Filial> GetByIdAsync(Guid id, CancellationToken ct = default)
+    public async Task<Filial?> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
         // busca por id
         return await context.Filiais
             .AsNoTracking()
+            .Include(f => f.Patios)
             .FirstOrDefaultAsync(f => f.Id == id, ct);
     }
 

@@ -6,6 +6,6 @@
         public string Nome { get; set; }
         public string Bairro { get; set; }
         public string Cnpj { get; set; }
-        public List<PatioResponse> Patios { get; set; }
+        public IReadOnlyList<string> Patios { get; init; } = Array.Empty<string>();
     }
 }
