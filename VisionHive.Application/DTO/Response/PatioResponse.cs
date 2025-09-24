@@ -10,6 +10,8 @@
         public Guid FilialId { get; init; }
         // nome da filial
         public string Filial { get; init; } = string.Empty;
-        public IReadOnlyList<string> Motos { get; init; } = Array.Empty<string>();
+        public IReadOnlyList<MotoResponse> Motos { get; init; } = Array.Empty<MotoResponse>();
+        
+        
     }
 }
