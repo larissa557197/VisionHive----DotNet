@@ -4,6 +4,7 @@ using System.Net;
 using VisionHive.Application.DTO.Request;
 using VisionHive.Application.DTO.Response;
 using VisionHive.Application.UseCases;
+using VisionHive.Domain.Pagination;
 using VisionHive.Infrastructure.Contexts;
 
 /// <summary>Endpoints REST para a entidade Pátio.</summary>
@@ -39,20 +40,47 @@ namespace VisionHive.API.Controllers
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<IActionResult> GetPaginate([FromQuery] PatioPaginatedRequest query)
+        public async Task<ActionResult<PageResult<PatioResponse>>> GetPaginate([FromQuery] PatioPaginatedRequest query)
         {
-            var result = await patioUseCase.GetPagination(query);
-            return Ok(result);
+            var page = await patioUseCase.GetPagination(query);
+            var mapped = new PageResult<PatioResponse>
+            {
+                Items = page.Items.Select(p => new PatioResponse
+                {
+                    Id = p.Id,
+                    Nome = p.Nome,
+                    LimiteMotos = p.LimiteMotos,
+                    FilialId = p.FilialId,
+                    Filial = p.Filial?.Nome ?? string.Empty,
+                    Motos = p.Motos.Select(m => m.Placa ?? m.Chassi ?? m.NumeroMotor ?? "(sem id)").ToList()
+                }).ToList(),
+                Page = page.Page,
+                PageSize = page.PageSize,
+                Total = page.Total
+            };
+            return Ok(mapped);
         }
 
         /// <summary>Obtém um pátio por ID.</summary>
         [HttpGet("{id:guid}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<IActionResult> GetById(Guid id)
+        public async Task<ActionResult<PatioResponse>> GetById(Guid id)
         {
             var entity = await patioUseCase.GetByIdAsync(id);
-            return entity is null ? NotFound("Pátio não encontrado") : Ok(entity);
+            if (entity is null) return NotFound("Pátio não encontrado");
+
+            var dto = new PatioResponse
+            {
+                Id = entity.Id,
+                Nome = entity.Nome,
+                LimiteMotos = entity.LimiteMotos,
+                FilialId = entity.FilialId,
+                Filial = entity.Filial?.Nome ?? string.Empty,
+                Motos = entity.Motos.Select(m => m.Placa ?? m.Chassi ?? m.NumeroMotor ?? "(sem id)").ToList()
+            };
+
+            return Ok(dto);
         }
 
         /// <summary>Atualiza um pátio existente.</summary>
