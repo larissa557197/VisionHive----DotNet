@@ -143,10 +143,10 @@ VisionHive.API.Test/       # Projeto de testes
 
 ---
 
-## 🧑‍💻 Equipe (exemplo)
+## 🧑‍💻 Integrantes do Projeto
 - Larissa Muniz (RM557197)  
 - João Victor Michaeli (RM555678)  
 - Henrique Garcia (RM558062)  
 
 ---
-✨ Desenvolvido para o **Checkpoint 4 - Clean Architecture & DDD (.NET)** na **FIAP**
+✨ Desenvolvido para o **Challenge - Mottu** na **FIAP**
