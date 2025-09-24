@@ -2,6 +2,7 @@
 using VisionHive.Domain.Entities;
 using VisionHive.Domain.Pagination;
 using VisionHive.Infrastructure.Repositories;
+using VisionHive.Domain.Enums;
 
 namespace VisionHive.Application.UseCases;
 

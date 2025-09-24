@@ -1,4 +1,5 @@
-﻿using VisionHive.Application.Enums;
+﻿using VisionHive.Domain.Enums;
+
 namespace VisionHive.Domain.Entities
 {
     public class Moto

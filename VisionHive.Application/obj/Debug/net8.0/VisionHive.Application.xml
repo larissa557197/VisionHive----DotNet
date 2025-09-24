@@ -1,0 +1,240 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VisionHive.Application</name>
+    </assembly>
+    <members>
+        <member name="M:VisionHive.Application.DependencyInjection.AddApplication(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Registra os casos de uso da aplicação (camada Application).
+            </summary>
+        </member>
+        <member name="T:VisionHive.Application.DTO.Request.FilialPaginatedRequest">
+            <summary>
+            Parâmetros de paginação, busca e ordenação para listar <c>Filial</c>.
+            Usado pelo endpoint GET /api/v1/filiais.
+            </summary>
+        </member>
+        <member name="P:VisionHive.Application.DTO.Request.FilialPaginatedRequest.PageNumber">
+            <summary>Número da página (>= 1).</summary>
+            <example>1</example>
+        </member>
+        <member name="P:VisionHive.Application.DTO.Request.FilialPaginatedRequest.PageSize">
+            <summary>Tamanho da página (1..100).</summary>
+            <example>10</example>
+        </member>
+        <member name="P:VisionHive.Application.DTO.Request.FilialPaginatedRequest.Search">
+            <summary>Texto de busca (aplica em Nome, Bairro ou Cnpj).</summary>
+            <example>Centro</example>
+        </member>
+        <member name="P:VisionHive.Application.DTO.Request.FilialPaginatedRequest.SortBy">
+            <summary>Campo para ordenação (nome, bairro ou cnpj).</summary>
+            <example>nome</example>
+        </member>
+        <member name="P:VisionHive.Application.DTO.Request.FilialPaginatedRequest.SortDir">
+            <summary>Direção da ordenação (Asc ou Desc).</summary>
+            <example>Asc</example>
+        </member>
+        <member name="T:VisionHive.Application.DTO.Request.FilialRequest">
+            <summary>
+            Dados para criar ou atualizar uma <c>Filial</c>.
+            Este DTO é usado nos endpoints POST e PUT.
+            </summary>
+        </member>
+        <member name="P:VisionHive.Application.DTO.Request.FilialRequest.Nome">
+            <summary>Nome da filial.</summary>
+            <example>Filial São Paulo Centro</example>
+        </member>
+        <member name="P:VisionHive.Application.DTO.Request.FilialRequest.Bairro">
+            <summary>Bairro onde a filial está localizada.</summary>
+            <example>Bela Vista</example>
+        </member>
+        <member name="P:VisionHive.Application.DTO.Request.FilialRequest.Cnpj">
+            <summary>CNPJ da filial.</summary>
+            <example>12.345.678/0001-99</example>
+        </member>
+        <member name="T:VisionHive.Application.DTO.Request.PatioPaginatedRequest">
+            <summary>
+            Parâmetros de paginação, busca e ordenação para listar <c>Patio</c>
+            Este DTO é consumido pelo endpoint GET /api/v1/patios
+            </summary>
+        </member>
+        <member name="P:VisionHive.Application.DTO.Request.PatioPaginatedRequest.PageNumber">
+            <summary>
+            Número da página (>=1)
+            <example>1</example>
+            </summary>
+        </member>
+        <member name="P:VisionHive.Application.DTO.Request.PatioPaginatedRequest.PageSize">
+            <summary>
+            Tamanho da página (1..100)
+            <example>10</example>
+            </summary>
+        </member>
+        <member name="P:VisionHive.Application.DTO.Request.PatioPaginatedRequest.Search">
+            <summary>
+            Texto de busca (aplica em Nome)
+            <example>Central</example>
+            </summary>
+        </member>
+        <member name="P:VisionHive.Application.DTO.Request.PatioPaginatedRequest.SortBy">
+            <summary>
+            Campo para ordenação (nome ou limiteMotos)
+            <example>nome</example>
+            </summary>
+        </member>
+        <member name="P:VisionHive.Application.DTO.Request.PatioPaginatedRequest.SortDir">
+            <summary>
+            Direção da ordenação (Asc ou Desc)
+            <example>Asc</example>
+            </summary>
+        </member>
+        <member name="T:VisionHive.Application.DTO.Request.PatioRequest">
+            <summary>
+            Dados para criar ou atualizar um <c>Patio</c>
+            Este DTO é usado pelos endpoints POST e PUT
+            </summary>
+        </member>
+        <member name="P:VisionHive.Application.DTO.Request.PatioRequest.Nome">
+            <summary>
+            Nome do pátio
+            <example>Pátio Central</example>
+            </summary>
+        </member>
+        <member name="P:VisionHive.Application.DTO.Request.PatioRequest.LimiteMotos">
+            <summary>
+            Limite máximo de motos permitido no pátio
+            A entidade de dominio também valida que seja maior que zero
+            <example>100</example>
+            </summary>
+        </member>
+        <member name="P:VisionHive.Application.DTO.Request.PatioRequest.FilialId">
+            <summary>
+            Identificador da filial associada ao pátio
+            </summary>
+        </member>
+        <member name="T:VisionHive.Application.UseCases.FilialUseCase">
+            <summary>
+            Implementação do caso de uso da entidade <see cref="T:VisionHive.Domain.Entities.Filial"/>.
+            Centraliza regras de negócio e delega persistência ao <see cref="T:VisionHive.Infrastructure.Repositories.IFilialRepository"/>.
+            </summary>
+        </member>
+        <member name="M:VisionHive.Application.UseCases.FilialUseCase.#ctor(VisionHive.Infrastructure.Repositories.IFilialRepository)">
+            <summary>
+            Implementação do caso de uso da entidade <see cref="T:VisionHive.Domain.Entities.Filial"/>.
+            Centraliza regras de negócio e delega persistência ao <see cref="T:VisionHive.Infrastructure.Repositories.IFilialRepository"/>.
+            </summary>
+        </member>
+        <member name="T:VisionHive.Application.UseCases.IFilialUseCase">
+            <summary>
+            Contrato de operações disponíveis para a entidade <see cref="T:VisionHive.Domain.Entities.Filial"/>.
+            Define os métodos que os Controllers irão consumir.
+            </summary>
+        </member>
+        <member name="M:VisionHive.Application.UseCases.IFilialUseCase.GetPagination(VisionHive.Application.DTO.Request.FilialPaginatedRequest)">
+            <summary>
+            Retorna uma lista paginada de filiais, com suporte a busca e ordenação.
+            </summary>
+            <param name="request">Parâmetros de paginação/filtro.</param>
+            <returns>Um <see cref="T:VisionHive.Domain.Pagination.PageResult`1"/> contendo itens e metadados.</returns>
+        </member>
+        <member name="M:VisionHive.Application.UseCases.IFilialUseCase.GetByIdAsync(System.Guid)">
+            <summary>
+            Busca uma filial específica pelo seu identificador.
+            </summary>
+            <param name="id">ID da filial.</param>
+            <returns>Instância de <see cref="T:VisionHive.Domain.Entities.Filial"/> ou <c>null</c> se não encontrada.</returns>
+        </member>
+        <member name="M:VisionHive.Application.UseCases.IFilialUseCase.CreateAsync(VisionHive.Application.DTO.Request.FilialRequest)">
+            <summary>
+            Cria uma nova filial.
+            </summary>
+            <param name="request">Dados de criação.</param>
+            <returns>Entidade criada.</returns>
+        </member>
+        <member name="M:VisionHive.Application.UseCases.IFilialUseCase.UpdateAsync(System.Guid,VisionHive.Application.DTO.Request.FilialRequest)">
+            <summary>
+            Atualiza uma filial existente.
+            </summary>
+            <param name="id">ID da filial a ser atualizada.</param>
+            <param name="request">Novos dados da filial.</param>
+            <returns><c>true</c> se atualizou; <c>false</c> se não encontrada.</returns>
+        </member>
+        <member name="M:VisionHive.Application.UseCases.IFilialUseCase.DeleteAsync(System.Guid)">
+            <summary>
+            Remove uma filial pelo seu identificador.
+            </summary>
+            <param name="id">ID da filial.</param>
+            <returns><c>true</c> se removeu; <c>false</c> se não encontrada.</returns>
+        </member>
+        <member name="M:VisionHive.Application.UseCases.IMotoUseCase.GetByIdAsync(System.Guid)">
+            busca uma moto específica pelo ID
+        </member>
+        <member name="T:VisionHive.Application.UseCases.IPatioUseCase">
+            <summary>
+            Contrato de operações disponíveis para a entidade <see cref="T:VisionHive.Domain.Entities.Patio"/>
+            Define os métodos que os Controllers irão consumir
+            </summary>
+        </member>
+        <member name="M:VisionHive.Application.UseCases.IPatioUseCase.GetPagination(VisionHive.Application.DTO.Request.PatioPaginatedRequest)">
+            <summary>
+            Retorna uma lista paginada de pátios, com suporte a busca e ordenação.
+            </summary>
+            <param name="request">Parâmetros de paginação e filtro.</param>
+            <returns>Objeto <see cref="T:VisionHive.Domain.Pagination.PageResult`1"/> contendo os itens e metadados.</returns>
+        </member>
+        <member name="M:VisionHive.Application.UseCases.IPatioUseCase.GetByIdAsync(System.Guid)">
+            <summary>
+            Busca um pátio específico pelo seu identificador.
+            </summary>
+            <param name="id">ID do pátio.</param>
+            <returns>Instância de <see cref="T:VisionHive.Domain.Entities.Patio"/> ou <c>null</c> se não encontrada.</returns>
+        </member>
+        <member name="M:VisionHive.Application.UseCases.IPatioUseCase.CreateAsync(VisionHive.Application.DTO.Request.PatioRequest)">
+            <summary>
+            Cria um novo pátio a partir do DTO de entrada.
+            </summary>
+            <param name="request">Dados para criação do pátio.</param>
+            <returns>Pátio criado.</returns>
+        </member>
+        <member name="M:VisionHive.Application.UseCases.IPatioUseCase.UpdateAsync(System.Guid,VisionHive.Application.DTO.Request.PatioRequest)">
+            <summary>
+            Atualiza um pátio existente.
+            </summary>
+            <param name="id">ID do pátio a ser atualizado.</param>
+            <param name="request">Novos dados do pátio.</param>
+            <returns><c>true</c> se atualizou; <c>false</c> se não encontrado.</returns>
+        </member>
+        <member name="M:VisionHive.Application.UseCases.IPatioUseCase.DeleteAsync(System.Guid)">
+            <summary>
+            Remove um pátio pelo seu identificador.
+            </summary>
+            <param name="id">ID do pátio.</param>
+            <returns><c>true</c> se removeu; <c>false</c> se não encontrado.</returns>
+        </member>
+        <member name="T:VisionHive.Application.UseCases.MotoUseCase">
+            <summary>
+            Implementação do caso de uso da entidade <see cref="T:VisionHive.Domain.Entities.Moto"/>
+            Orquestra as regras de negócio e delega o acesso a dados para o <see cref="T:VisionHive.Infrastructure.Repositories.IMotoRepository"/>
+            </summary>
+        </member>
+        <member name="M:VisionHive.Application.UseCases.MotoUseCase.#ctor(VisionHive.Infrastructure.Repositories.IMotoRepository)">
+            <summary>
+            Implementação do caso de uso da entidade <see cref="T:VisionHive.Domain.Entities.Moto"/>
+            Orquestra as regras de negócio e delega o acesso a dados para o <see cref="T:VisionHive.Infrastructure.Repositories.IMotoRepository"/>
+            </summary>
+        </member>
+        <member name="T:VisionHive.Application.UseCases.PatioUseCase">
+            <summary>
+            Implementação do caso de uso da entidade <see cref="T:VisionHive.Domain.Entities.Patio"/>
+            Centraliza regras de negócio e delega persistência ao <see cref="T:VisionHive.Infrastructure.Repositories.IPatioRepository"/>
+            </summary>
+        </member>
+        <member name="M:VisionHive.Application.UseCases.PatioUseCase.#ctor(VisionHive.Infrastructure.Repositories.IPatioRepository)">
+            <summary>
+            Implementação do caso de uso da entidade <see cref="T:VisionHive.Domain.Entities.Patio"/>
+            Centraliza regras de negócio e delega persistência ao <see cref="T:VisionHive.Infrastructure.Repositories.IPatioRepository"/>
+            </summary>
+        </member>
+    </members>
+</doc>

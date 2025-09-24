@@ -12,7 +12,7 @@
           "Microsoft.EntityFrameworkCore": "9.0.8",
           "Microsoft.EntityFrameworkCore.Design": "9.0.8",
           "Oracle.EntityFrameworkCore": "9.23.90",
-          "VisionHive.Application": "1.0.0"
+          "VisionHive.Domain": "1.0.0"
         },
         "runtime": {
           "VisionHive.Infrastructure.dll": {}
@@ -856,14 +856,14 @@
         }
       },
       "System.Threading.Channels/7.0.0": {},
-      "VisionHive.Application/1.0.0": {
+      "VisionHive.Domain/1.0.0": {
         "dependencies": {
           "EntityFramework": "6.5.1",
           "Microsoft.EntityFrameworkCore": "9.0.8",
           "Oracle.EntityFrameworkCore": "9.23.90"
         },
         "runtime": {
-          "VisionHive.Application.dll": {
+          "VisionHive.Domain.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -1318,7 +1318,7 @@
       "path": "system.threading.channels/7.0.0",
       "hashPath": "system.threading.channels.7.0.0.nupkg.sha512"
     },
-    "VisionHive.Application/1.0.0": {
+    "VisionHive.Domain/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

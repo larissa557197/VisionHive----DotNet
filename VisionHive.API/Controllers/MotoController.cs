@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Net;
 using VisionHive.Application.DTO.Request;
 using VisionHive.Application.DTO.Response;
-using VisionHive.Application.Enums;
+using VisionHive.Domain.Enums;
 using VisionHive.Application.UseCases;
 using VisionHive.Domain.Entities;
 using VisionHive.Infrastructure.Contexts;

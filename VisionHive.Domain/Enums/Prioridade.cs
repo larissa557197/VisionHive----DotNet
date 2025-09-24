@@ -1,4 +1,4 @@
-﻿namespace VisionHive.Application.Enums
+﻿namespace VisionHive.Domain.Enums
 {
     public enum Prioridade
     {

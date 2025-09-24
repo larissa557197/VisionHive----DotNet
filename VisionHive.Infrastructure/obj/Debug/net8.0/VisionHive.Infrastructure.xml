@@ -1,0 +1,289 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VisionHive.Infrastructure</name>
+    </assembly>
+    <members>
+        <member name="M:VisionHive.Infrastructure.DependencyInjection.AddInfrastructure(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Método único para registrar DbContext + Repositórios, no padrão do professor.
+            </summary>
+        </member>
+        <member name="T:VisionHive.Infrastructure.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:VisionHive.Infrastructure.Migrations.BaselineFiliais">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.BaselineFiliais.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.BaselineFiliais.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.BaselineFiliais.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:VisionHive.Infrastructure.Migrations.AlterCnpjLengthInFiliais">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.AlterCnpjLengthInFiliais.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.AlterCnpjLengthInFiliais.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.AlterCnpjLengthInFiliais.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:VisionHive.Infrastructure.Migrations.AddIndexOnCnpjFiliais">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.AddIndexOnCnpjFiliais.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.AddIndexOnCnpjFiliais.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.AddIndexOnCnpjFiliais.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:VisionHive.Infrastructure.Migrations.AddFilialAndPatioEntities">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.AddFilialAndPatioEntities.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.AddFilialAndPatioEntities.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.AddFilialAndPatioEntities.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:VisionHive.Infrastructure.Migrations.AddRelationMotosPatios">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.AddRelationMotosPatios.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.AddRelationMotosPatios.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.AddRelationMotosPatios.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:VisionHive.Infrastructure.Migrations.AddFilialAndPatioAndMotosEntities">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.AddFilialAndPatioAndMotosEntities.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.AddFilialAndPatioAndMotosEntities.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.AddFilialAndPatioAndMotosEntities.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:VisionHive.Infrastructure.Migrations.AddFilialToPatios">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.AddFilialToPatios.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.AddFilialToPatios.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.AddFilialToPatios.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:VisionHive.Infrastructure.Repositories.FilialRepository">
+            <summary>
+            Implementação de <see cref="T:VisionHive.Infrastructure.Repositories.IFilialRepository"/> usando EF Core.
+            Responsável por persistir e consultar dados da entidade <see cref="T:VisionHive.Domain.Entities.Filial"/>.
+            </summary>
+        </member>
+        <member name="M:VisionHive.Infrastructure.Repositories.FilialRepository.#ctor(VisionHive.Infrastructure.Contexts.VisionHiveContext)">
+            <summary>
+            Implementação de <see cref="T:VisionHive.Infrastructure.Repositories.IFilialRepository"/> usando EF Core.
+            Responsável por persistir e consultar dados da entidade <see cref="T:VisionHive.Domain.Entities.Filial"/>.
+            </summary>
+        </member>
+        <member name="T:VisionHive.Infrastructure.Repositories.IFilialRepository">
+            <summary>
+            Contrato de acesso a dados para a entidade <see cref="T:VisionHive.Domain.Entities.Filial"/>.
+            Define operações de CRUD e listagem paginada com filtro/ordenação.
+            </summary>
+        </member>
+        <member name="M:VisionHive.Infrastructure.Repositories.IFilialRepository.AddAsync(VisionHive.Domain.Entities.Filial,System.Threading.CancellationToken)">
+            <summary>
+            Adiciona uma nova <see cref="T:VisionHive.Domain.Entities.Filial"/> ao banco de dados.
+            </summary>
+            <param name="filial">Instância a ser persistida.</param>
+            <param name="ct">Token de cancelamento (opcional).</param>
+            <returns>Entidade persistida (com <c>Id</c> preenchido).</returns>
+        </member>
+        <member name="M:VisionHive.Infrastructure.Repositories.IFilialRepository.GetPaginationAsync(System.Int32,System.Int32,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Retorna uma página de <see cref="T:VisionHive.Domain.Entities.Filial"/> com suporte a busca por nome, bairro ou CNPJ.
+            </summary>
+            <param name="page">Número da página (>= 1).</param>
+            <param name="pageSize">Tamanho da página (>= 1).</param>
+            <param name="search">Texto para busca (aplica em Nome, Bairro e Cnpj).</param>
+            <param name="ct">Token de cancelamento (opcional).</param>
+            <returns>
+            Um <see cref="T:VisionHive.Domain.Pagination.PageResult`1"/> com <c>Items</c>, <c>Page</c>, <c>PageSize</c>, <c>Total</c>
+            e auxiliares de navegação.
+            </returns>
+        </member>
+        <member name="M:VisionHive.Infrastructure.Repositories.IFilialRepository.GetByIdAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Obtém uma <see cref="T:VisionHive.Domain.Entities.Filial"/> pelo seu identificador.
+            </summary>
+            <param name="id">Identificador da filial.</param>
+            <param name="ct">Token de cancelamento (opcional).</param>
+            <returns>Entidade encontrada ou <c>null</c>.</returns>
+        </member>
+        <member name="M:VisionHive.Infrastructure.Repositories.IFilialRepository.UpdateAsync(VisionHive.Domain.Entities.Filial,System.Threading.CancellationToken)">
+            <summary>
+            Atualiza os dados de uma <see cref="T:VisionHive.Domain.Entities.Filial"/>.
+            </summary>
+            <param name="filial">Instância com os novos valores.</param>
+            <param name="ct">Token de cancelamento (opcional).</param>
+            <returns><c>true</c> se ao menos um registro foi afetado; caso contrário, <c>false</c>.</returns>
+        </member>
+        <member name="M:VisionHive.Infrastructure.Repositories.IFilialRepository.DeleteAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Remove uma <see cref="T:VisionHive.Domain.Entities.Filial"/> pelo seu identificador.
+            </summary>
+            <param name="id">ID da filial.</param>
+            <param name="ct">Token de cancelamento (opcional).</param>
+            <returns><c>true</c> se excluiu; <c>false</c> se não encontrado.</returns>
+        </member>
+        <member name="M:VisionHive.Infrastructure.Repositories.IMotoRepository.AddAsync(VisionHive.Domain.Entities.Moto,System.Threading.CancellationToken)">
+            <summary>
+            Adiciona uma nova moto ao banco de dados.
+            </summary>
+            <param name="moto">Instância da entidade <see cref="T:VisionHive.Domain.Entities.Moto"/> a ser persistida.</param>
+            <param name="ct">Token de cancelamento (opcional).</param>
+            <returns>A entidade persistida, já com Id preenchido.</returns>
+        </member>
+        <member name="M:VisionHive.Infrastructure.Repositories.IMotoRepository.GetPaginationAsync(System.Int32,System.Int32,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Retorna uma lista paginada de motos, com suporte a filtro de busca.
+            </summary>
+            <param name="page">Número da página (>= 1).</param>
+            <param name="pageSize">Tamanho da página (>= 1).</param>
+            <param name="search">Texto de busca (placa, chassi ou número do motor).</param>
+            <param name="ct">Token de cancelamento (opcional).</param>
+            <returns>Objeto <see cref="T:VisionHive.Domain.Pagination.PageResult`1"/> contendo a página de resultados.</returns>
+        </member>
+        <member name="M:VisionHive.Infrastructure.Repositories.IMotoRepository.GetByIdAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Busca uma moto pelo identificador único.
+            </summary>
+            <param name="id">Id da moto.</param>
+            <param name="ct">Token de cancelamento (opcional).</param>
+            <returns>A moto encontrada ou null.</returns>
+        </member>
+        <member name="M:VisionHive.Infrastructure.Repositories.IMotoRepository.UpdateAsync(VisionHive.Domain.Entities.Moto,System.Threading.CancellationToken)">
+            <summary>
+            Atualiza uma moto existente.
+            </summary>
+            <param name="moto">Instância da moto com os novos dados.</param>
+            <param name="ct">Token de cancelamento (opcional).</param>
+            <returns>True se atualizou pelo menos um registro, senão false.</returns>
+        </member>
+        <member name="M:VisionHive.Infrastructure.Repositories.IMotoRepository.DeleteAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Exclui uma moto pelo seu identificador.
+            </summary>
+            <param name="id">Id da moto.</param>
+            <param name="ct">Token de cancelamento (opcional).</param>
+            <returns>True se excluiu, false se não encontrou.</returns>
+        </member>
+        <member name="T:VisionHive.Infrastructure.Repositories.IPatioRepository">
+            <summary>
+            Contrato de acesso a dados para a entidade <see cref="T:VisionHive.Domain.Entities.Patio"/>
+            Define operações de CRUD e listagem paginada com filtro/ordenação
+            </summary>
+        </member>
+        <member name="M:VisionHive.Infrastructure.Repositories.IPatioRepository.AddAsync(VisionHive.Domain.Entities.Patio,System.Threading.CancellationToken)">
+            <summary>
+            Adiciona um novo <see cref="T:VisionHive.Domain.Entities.Patio"/> ao banco de dados
+            <param name="patio">Instância a ser persistida</param>
+            <param name="ct">Token de cancelamento (opcional)</param>
+            <returns>Entidade persistida (com <c>Id</c> preenchido)</returns>
+            </summary>
+        </member>
+        <member name="M:VisionHive.Infrastructure.Repositories.IPatioRepository.GetPaginationAsync(System.Int32,System.Int32,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Retorna uma página de <see cref="T:VisionHive.Domain.Entities.Patio"/> com suporte a busca por nome.
+            </summary>
+            <param name="page">Número da página (>= 1).</param>
+            <param name="pageSize">Tamanho da página (>= 1).</param>
+            <param name="search">Texto para busca no <c>Nome</c> (opcional).</param>
+            <param name="ct">Token de cancelamento (opcional).</param>
+            <returns>
+            Um <see cref="T:VisionHive.Domain.Pagination.PageResult`1"/> com <c>Items</c>, <c>Page</c>, <c>PageSize</c>, <c>Total</c>
+            e auxiliares de navegação.
+            </returns>
+        </member>
+        <member name="M:VisionHive.Infrastructure.Repositories.IPatioRepository.GetByIdAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Obtém um <see cref="T:VisionHive.Domain.Entities.Patio"/> pelo seu identificador.
+            </summary>
+            <param name="id">Identificador do pátio.</param>
+            <param name="ct">Token de cancelamento (opcional).</param>
+            <returns>Entidade encontrada ou <c>null</c>.</returns>
+        </member>
+        <member name="M:VisionHive.Infrastructure.Repositories.IPatioRepository.UpdateAsync(VisionHive.Domain.Entities.Patio,System.Threading.CancellationToken)">
+            <summary>
+            Atualiza os dados de um <see cref="T:VisionHive.Domain.Entities.Patio"/>.
+            </summary>
+            <param name="patio">Instância com os novos valores.</param>
+            <param name="ct">Token de cancelamento (opcional).</param>
+            <returns><c>true</c> se ao menos um registro foi afetado; caso contrário, <c>false</c>.</returns>
+        </member>
+        <member name="M:VisionHive.Infrastructure.Repositories.IPatioRepository.DeleteAsync(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Remove um <see cref="T:VisionHive.Domain.Entities.Patio"/> pelo seu identificador.
+            </summary>
+            <param name="id">Identificador do pátio.</param>
+            <param name="ct">Token de cancelamento (opcional).</param>
+            <returns><c>true</c> se excluiu; <c>false</c> se não encontrado.</returns>
+        </member>
+        <member name="T:VisionHive.Infrastructure.Repositories.MotoRepository">
+            <summary>
+            Implementação de <see cref="T:VisionHive.Infrastructure.Repositories.IMotoRepository"/> usando EF Core
+            Responsável por persistir e recuperar dados da entidade <see cref="T:VisionHive.Domain.Entities.Moto"/>
+            </summary>
+        </member>
+        <member name="M:VisionHive.Infrastructure.Repositories.MotoRepository.#ctor(VisionHive.Infrastructure.Contexts.VisionHiveContext)">
+            <summary>
+            Implementação de <see cref="T:VisionHive.Infrastructure.Repositories.IMotoRepository"/> usando EF Core
+            Responsável por persistir e recuperar dados da entidade <see cref="T:VisionHive.Domain.Entities.Moto"/>
+            </summary>
+        </member>
+        <member name="T:VisionHive.Infrastructure.Repositories.PatioRepository">
+            <summary>
+            Implementação de <see cref="T:VisionHive.Infrastructure.Repositories.IPatioRepository"/> usando EF Core
+            Responsável por persistir e consultar dados da entidade <see cref="T:VisionHive.Domain.Entities.Patio"/>
+            </summary>
+        </member>
+        <member name="M:VisionHive.Infrastructure.Repositories.PatioRepository.#ctor(VisionHive.Infrastructure.Contexts.VisionHiveContext)">
+            <summary>
+            Implementação de <see cref="T:VisionHive.Infrastructure.Repositories.IPatioRepository"/> usando EF Core
+            Responsável por persistir e consultar dados da entidade <see cref="T:VisionHive.Domain.Entities.Patio"/>
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -3,6 +3,8 @@
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);1591</NoWarn>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
@@ -15,9 +17,5 @@
       </PackageReference>
       <PackageReference Include="Oracle.EntityFrameworkCore" Version="9.23.90" />
     </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\VisionHive.Application\VisionHive.Application.csproj" />
-    </ItemGroup>
-
+    
 </Project>

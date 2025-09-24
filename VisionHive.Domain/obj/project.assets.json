@@ -1314,21 +1314,6 @@
         "build": {
           "buildTransitive/net6.0/_._": {}
         }
-      },
-      "VisionHive.Application/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v8.0",
-        "dependencies": {
-          "EntityFramework": "6.5.1",
-          "Microsoft.EntityFrameworkCore": "9.0.8",
-          "Oracle.EntityFrameworkCore": "9.23.90"
-        },
-        "compile": {
-          "bin/placeholder/VisionHive.Application.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/VisionHive.Application.dll": {}
-        }
       }
     }
   },
@@ -4059,11 +4044,6 @@
         "system.threading.channels.nuspec",
         "useSharedDesignerContext.txt"
       ]
-    },
-    "VisionHive.Application/1.0.0": {
-      "type": "project",
-      "path": "../VisionHive.Application/VisionHive.Application.csproj",
-      "msbuildProject": "../VisionHive.Application/VisionHive.Application.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -4071,28 +4051,27 @@
       "EntityFramework >= 6.5.1",
       "Microsoft.EntityFrameworkCore >= 9.0.8",
       "Microsoft.EntityFrameworkCore.Design >= 9.0.8",
-      "Oracle.EntityFrameworkCore >= 9.23.90",
-      "VisionHive.Application >= 1.0.0"
+      "Oracle.EntityFrameworkCore >= 9.23.90"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\labsfiap\\.nuget\\packages\\": {},
+    "C:\\Users\\laris\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Cp4-DotNet\\VisionHive.Domain\\VisionHive.Domain.csproj",
+      "projectUniqueName": "C:\\Users\\laris\\Cp4-DotNet\\VisionHive.Domain\\VisionHive.Domain.csproj",
       "projectName": "VisionHive.Domain",
-      "projectPath": "C:\\Users\\Cp4-DotNet\\VisionHive.Domain\\VisionHive.Domain.csproj",
-      "packagesPath": "C:\\Users\\labsfiap\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Cp4-DotNet\\VisionHive.Domain\\obj\\",
+      "projectPath": "C:\\Users\\laris\\Cp4-DotNet\\VisionHive.Domain\\VisionHive.Domain.csproj",
+      "packagesPath": "C:\\Users\\laris\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\laris\\Cp4-DotNet\\VisionHive.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\labsfiap\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\laris\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -4101,17 +4080,12 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {
-            "C:\\Users\\Cp4-DotNet\\VisionHive.Application\\VisionHive.Application.csproj": {
-              "projectPath": "C:\\Users\\Cp4-DotNet\\VisionHive.Application\\VisionHive.Application.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -4165,7 +4139,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

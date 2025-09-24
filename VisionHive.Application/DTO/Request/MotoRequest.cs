@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using VisionHive.Application.Enums;
+using VisionHive.Domain.Enums;
 namespace VisionHive.Application.DTO.Request
 {
     public class MotoRequest
