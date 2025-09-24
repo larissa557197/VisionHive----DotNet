@@ -131,13 +131,13 @@ dotnet run --project VisionHive.API
 
 ---
 
-## 📂 Estrutura do Repositório
+## 📂 Arquitetura
 
 ```
-VisionHive.Domain/         # Entidades de domínio
-VisionHive.Application/    # DTOs, Enums e contratos
-VisionHive.Infrastructure/ # EF Core, Mappings, Migrations, Context
 VisionHive.API/            # Controllers, Program.cs, Swagger
+VisionHive.Application/    # DTOs, Validações, DI
+VisionHive.Domain/         # Entidades de domínio
+VisionHive.Infrastructure/ # EF Core, Mappings, Migrations
 VisionHive.API.Test/       # Projeto de testes
 ```
 
