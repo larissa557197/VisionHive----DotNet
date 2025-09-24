@@ -26,7 +26,10 @@ public sealed class PatioRepository(VisionHiveContext context) : IPatioRepositor
         CancellationToken ct = default)
     {
         // query base: leitura sem rastreamento melhora performance
-        IQueryable<Patio> query = context.Patios.AsNoTracking();
+        IQueryable<Patio> query = context.Patios
+            .AsNoTracking()
+            .Include(p => p.Filial)
+            .Include(p => p.Motos);
         
         // filtro por nome, se informado
         if (!string.IsNullOrWhiteSpace(search))
@@ -63,6 +66,8 @@ public sealed class PatioRepository(VisionHiveContext context) : IPatioRepositor
         // busca por Id 
         return await context.Patios
             .AsNoTracking()
+            .Include(p => p.Filial)
+            .Include(p => p.Motos)
             .FirstOrDefaultAsync(p => p.Id == id, ct);
     }
 
