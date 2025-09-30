@@ -51,11 +51,11 @@ public class Program
                     swagger.IncludeXmlComments(path);
             }
 
-            // 👇 habilita exemplos (request/response) no Swagger
+            //  habilita exemplos (request/response) no Swagger
             swagger.ExampleFilters();
         });
 
-        // 👇 registra os providers de exemplos a partir deste assembly
+        //  registra os providers de exemplos a partir deste assembly
         builder.Services.AddSwaggerExamplesFromAssemblyOf<Program>();
 
         // registra Infra (DbContext + repositórios) e Application (use cases)
