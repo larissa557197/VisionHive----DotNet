@@ -22,9 +22,8 @@ namespace VisionHive.API.Controllers
     public class MotoController(IMotoUseCase motoUseCase) : ControllerBase
     {
         /// <summary>
-        /// cria uma nova moto
+        /// Cria uma nova moto
         /// </summary>
-        /// <param name="motoRepository"></param>
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -36,13 +35,21 @@ namespace VisionHive.API.Controllers
             try
             {
                 var created = await motoUseCase.CreateAsync(request);
-                return StatusCode((int)HttpStatusCode.Created, created);
+
+                var links = new
+                {
+                    self   = new { href = Url.ActionLink(nameof(GetById), values: new { id = created.Id }), method = "GET" },
+                    update = new { href = Url.ActionLink(nameof(Put),     values: new { id = created.Id }), method = "PUT" },
+                    delete = new { href = Url.ActionLink(nameof(Delete),  values: new { id = created.Id }), method = "DELETE" }
+                };
+
+                // 201 + Location + HATEOAS do recurso criado
+                return CreatedAtAction(nameof(GetById), new { id = created.Id }, new { data = created, _links = links });
             }
             catch (ArgumentException ex)
             {
-                // regras de negócio ex: precisa Placa/Chassi/NumeroMotor
+                // regra de negócio (ex.: precisa Placa/Chassi/NumeroMotor)
                 return BadRequest(ex.Message);
-
             }
         }
 
@@ -50,12 +57,14 @@ namespace VisionHive.API.Controllers
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<ActionResult<MotoResponse>> GetPaginate([FromQuery] MotoPaginatedRequest query)
+        public async Task<IActionResult> GetPaginate([FromQuery] MotoPaginatedRequest query)
         {
             var page = await motoUseCase.GetPagination(query);
-            var mapped = new PageResult<MotoResponse>
+
+            // itens com link próprio
+            var items = page.Items.Select(m => new
             {
-                Items = page.Items.Select(m => new MotoResponse
+                data = new MotoResponse
                 {
                     Id = m.Id,
                     Placa = m.Placa,
@@ -64,13 +73,42 @@ namespace VisionHive.API.Controllers
                     Prioridade = m.Prioridade.ToString(),
                     PatioId = m.PatioId,
                     Patio = m.Patio?.Nome
-                }).ToList(),
-                Page = page.Page,
+                },
+                _links = new
+                {
+                    self = new { href = Url.ActionLink(nameof(GetById), values: new { id = m.Id }), method = "GET" }
+                }
+            });
+
+            // links de navegação paginada
+            var self = Url.ActionLink(nameof(GetPaginate), values: query);
+            var next = page.HasNext ? Url.ActionLink(nameof(GetPaginate), values: new
+            {
+                PageNumber = page.Page + 1,
                 PageSize = page.PageSize,
-                Total = page.Total
-            };
-            
-            return Ok(mapped);
+                query.Search,
+                query.SortBy,
+                query.SortDir
+            }) : null;
+
+            var prev = page.HasPrevious ? Url.ActionLink(nameof(GetPaginate), values: new
+            {
+                PageNumber = page.Page - 1,
+                PageSize = page.PageSize,
+                query.Search,
+                query.SortBy,
+                query.SortDir
+            }) : null;
+
+            return Ok(new
+            {
+                items,
+                page = page.Page,
+                pageSize = page.PageSize,
+                totalItems = page.Total,
+                totalPages = page.TotalPages,
+                _links = new { self, next, prev }
+            });
         }
 
         /// <summary>
@@ -94,9 +132,16 @@ namespace VisionHive.API.Controllers
                 PatioId = entity.PatioId,
                 Patio = entity.Patio?.Nome
             };
-            return Ok(dto);
-        }
 
+            var links = new
+            {
+                self   = new { href = Url.ActionLink(nameof(GetById), values: new { id }), method = "GET" },
+                update = new { href = Url.ActionLink(nameof(Put),     values: new { id }), method = "PUT" },
+                delete = new { href = Url.ActionLink(nameof(Delete),  values: new { id }), method = "DELETE" }
+            };
+
+            return Ok(new { data = dto, _links = links });
+        }
 
         /// <summary>
         /// Atualiza uma moto existente
@@ -131,8 +176,5 @@ namespace VisionHive.API.Controllers
             var ok = await motoUseCase.DeleteAsync(id);
             return ok ? NoContent() : NotFound("Moto não encontrada");
         }
-
-
-
     }
 }
