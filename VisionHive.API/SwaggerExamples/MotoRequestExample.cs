@@ -4,7 +4,7 @@ using VisionHive.Domain.Enums;
 
 namespace VisionHive.API.SwaggerExamples;
 
-public class MotoExample : IExamplesProvider<MotoRequest>
+public class MotoRequestExample : IExamplesProvider<MotoRequest>
 {
     public MotoRequest GetExamples() => new MotoRequest
     {
