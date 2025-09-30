@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using Swashbuckle.AspNetCore.Filters;
+using VisionHive.API.SwaggerExamples;
 using VisionHive.Application.DTO.Request;
 using VisionHive.Application.DTO.Response;
 using VisionHive.Domain.Enums;
@@ -28,6 +30,8 @@ namespace VisionHive.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        [SwaggerRequestExample(typeof(MotoRequest), typeof(MotoRequestExample))] //  exemplo de request
+        [SwaggerResponseExample((int)HttpStatusCode.Created, typeof(MotoResponseExample))] //  exemplo de response
         public async Task<IActionResult> Post([FromBody] MotoRequest request)
         {
             if (!ModelState.IsValid) return ValidationProblem(ModelState);
@@ -150,6 +154,7 @@ namespace VisionHive.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [SwaggerRequestExample(typeof(MotoRequest), typeof(MotoRequestExample))] //  opcional: request example no PUT
         public async Task<IActionResult> Put(Guid id, [FromBody] MotoRequest request)
         {
             if (!ModelState.IsValid) return ValidationProblem(ModelState);
