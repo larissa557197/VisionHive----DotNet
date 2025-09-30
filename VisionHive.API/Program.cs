@@ -11,7 +11,7 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);
+       var builder = WebApplication.CreateBuilder(args);
 
         // Controllers + JSON options
         builder.Services.AddControllers()
@@ -51,11 +51,11 @@ public class Program
                     swagger.IncludeXmlComments(path);
             }
 
-            //  habilita exemplos (request/response) no Swagger
+            // habilita exemplos (request/response) no Swagger
             swagger.ExampleFilters();
         });
 
-        //  registra os providers de exemplos a partir deste assembly
+        // registra os providers de exemplos a partir deste assembly
         builder.Services.AddSwaggerExamplesFromAssemblyOf<Program>();
 
         // registra Infra (DbContext + repositórios) e Application (use cases)
@@ -64,22 +64,18 @@ public class Program
 
         var app = builder.Build();
 
-        // HTTP pipeline
-        if (app.Environment.IsDevelopment())
+        // HTTP pipeline - Swagger sempre ativo enquanto testa
+        app.UseSwagger();
+        app.UseSwaggerUI(c =>
         {
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "VisionHive API v1");
-                c.DocumentTitle = "VisionHive API";
-            });
-        }
-        else
-        {
-            // (Opcional) habilitar Swagger também em produção se quiser:
-            // app.UseSwagger();
-            // app.UseSwaggerUI();
-        }
+            // usa caminho ABSOLUTO correto
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "VisionHive API v1");
+            // mude o prefixo para forçar uma nova URL (evita cache do index.html)
+            c.RoutePrefix = "docs";
+            c.DocumentTitle = "VisionHive API";
+            // desliga o validador externo do swagger.io
+            c.ConfigObject.AdditionalItems["validatorUrl"] = null;
+        });
 
         app.UseHttpsRedirection();
 
@@ -89,7 +85,4 @@ public class Program
 
         app.Run();
     }
-
 }
-
-

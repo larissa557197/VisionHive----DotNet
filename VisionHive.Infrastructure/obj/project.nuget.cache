@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "X4pfNWgEJdM=",
+  "dgSpecHash": "lZ0padZ20mM=",
   "success": true,
-  "projectFilePath": "C:\\Users\\laris\\Cp4-DotNet\\VisionHive.Infrastructure\\VisionHive.Infrastructure.csproj",
+  "projectFilePath": "C:\\Users\\laris\\VisionHive----DotNet\\VisionHive.Infrastructure\\VisionHive.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\laris\\.nuget\\packages\\entityframework\\6.5.1\\entityframework.6.5.1.nupkg.sha512",
     "C:\\Users\\laris\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

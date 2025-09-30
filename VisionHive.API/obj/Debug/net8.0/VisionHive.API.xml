@@ -31,9 +31,8 @@
         </member>
         <member name="M:VisionHive.API.Controllers.MotoController.Post(VisionHive.Application.DTO.Request.MotoRequest)">
             <summary>
-            cria uma nova moto
+            Cria uma nova moto
             </summary>
-            <param name="motoRepository"></param>
         </member>
         <member name="M:VisionHive.API.Controllers.MotoController.GetPaginate(VisionHive.Application.DTO.Request.MotoPaginatedRequest)">
             <summary> Lista motos com paginação e filtro </summary>
