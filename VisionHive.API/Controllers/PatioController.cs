@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using Swashbuckle.AspNetCore.Filters;
+using VisionHive.API.SwaggerExamples;
 using VisionHive.Application.DTO.Request;
 using VisionHive.Application.DTO.Response;
 using VisionHive.Application.UseCases;
@@ -20,6 +22,8 @@ namespace VisionHive.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        [SwaggerRequestExample(typeof(PatioRequest), typeof(PatioRequestExample))]           //  exemplo de request
+        [SwaggerResponseExample((int)HttpStatusCode.Created, typeof(PatioResponseExample))] //  exemplo de response
         public async Task<IActionResult> Post([FromBody] PatioRequest request)
         {
             if (!ModelState.IsValid) return ValidationProblem(ModelState);
@@ -143,6 +147,7 @@ namespace VisionHive.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [SwaggerRequestExample(typeof(PatioRequest), typeof(PatioRequestExample))] //  opcional: exemplo no PUT também
         public async Task<IActionResult> Put(Guid id, [FromBody] PatioRequest request)
         {
             if (!ModelState.IsValid) return ValidationProblem(ModelState);
