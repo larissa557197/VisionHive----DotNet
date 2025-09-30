@@ -27,8 +27,15 @@ namespace VisionHive.API.Controllers
             {
                 var created = await filialUseCase.CreateAsync(request);
 
-                //201 com body
-                return StatusCode((int)HttpStatusCode.Created, created);
+                // 201 + Location com HATEOAS do recurso criado
+                var links = new
+                {
+                    self   = new { href = Url.ActionLink(nameof(GetById), values: new { id = created.Id }), method = "GET" },
+                    update = new { href = Url.ActionLink(nameof(Put),     values: new { id = created.Id }), method = "PUT" },
+                    delete = new { href = Url.ActionLink(nameof(Delete),  values: new { id = created.Id }), method = "DELETE" }
+                };
+
+                return CreatedAtAction(nameof(GetById), new { id = created.Id }, new { data = created, _links = links });
             }
             catch (ArgumentException ex)
             {
@@ -40,31 +47,63 @@ namespace VisionHive.API.Controllers
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<ActionResult<PageResult<FilialResponse>>> GetPaginate([FromQuery] FilialPaginatedRequest query)
+        public async Task<IActionResult> GetPaginate([FromQuery] FilialPaginatedRequest query)
         {
             var page = await filialUseCase.GetPagination(query);
-            var mapped = new PageResult<FilialResponse>
+
+            // itens com link próprio
+            var items = page.Items.Select(f => new
             {
-                Items = page.Items.Select(f => new FilialResponse
+                data = new FilialResponse
                 {
                     Id = f.Id,
                     Nome = f.Nome,
                     Bairro = f.Bairro,
                     Cnpj = f.Cnpj,
                     Patios = f.Patios.Select(p => p.Nome).ToList()
-                }).ToList(),
-                Page = page.Page,
+                },
+                _links = new
+                {
+                    self = new { href = Url.ActionLink(nameof(GetById), values: new { id = f.Id }), method = "GET" }
+                }
+            });
+
+            // links de navegação paginada
+            var self = Url.ActionLink(nameof(GetPaginate), values: query);
+            var next = page.HasNext ? Url.ActionLink(nameof(GetPaginate), values: new
+            {
+                PageNumber = page.Page + 1,
                 PageSize = page.PageSize,
-                Total = page.Total
-            };
-            return Ok(mapped);
+                query.Search,
+                query.SortBy,
+                query.SortDir
+            }) : null;
+
+            var prev = page.HasPrevious ? Url.ActionLink(nameof(GetPaginate), values: new
+            {
+                PageNumber = page.Page - 1,
+                PageSize = page.PageSize,
+                query.Search,
+                query.SortBy,
+                query.SortDir
+            }) : null;
+
+            return Ok(new
+            {
+                items,
+                page = page.Page,
+                pageSize = page.PageSize,
+                totalItems = page.Total,
+                totalPages = page.TotalPages,
+                _links = new { self, next, prev }
+            });
         }
 
         /// <summary>Obtém uma filial por ID.</summary>
         [HttpGet("{id:guid}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult<FilialResponse>> GetById(Guid id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             var entity = await filialUseCase.GetByIdAsync(id);
             if (entity is null) return NotFound("Filial não encontrada");
@@ -77,9 +116,17 @@ namespace VisionHive.API.Controllers
                 Cnpj = entity.Cnpj,
                 Patios = entity.Patios.Select(p => p.Nome).ToList()
             };
-            return Ok(dto);
+
+            var links = new
+            {
+                self   = new { href = Url.ActionLink(nameof(GetById), values: new { id }), method = "GET" },
+                update = new { href = Url.ActionLink(nameof(Put),     values: new { id }), method = "PUT" },
+                delete = new { href = Url.ActionLink(nameof(Delete),  values: new { id }), method = "DELETE" }
+            };
+
+            return Ok(new { data = dto, _links = links });
         }
-        
+
         /// <summary>Atualiza uma filial existente.</summary>
         [HttpPut("{id:guid}")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
@@ -99,7 +146,7 @@ namespace VisionHive.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        
+
         /// <summary>Remove uma filial pelo ID.</summary>
         [HttpDelete("{id:guid}")]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
