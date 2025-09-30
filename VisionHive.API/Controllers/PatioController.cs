@@ -22,13 +22,21 @@ namespace VisionHive.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
         public async Task<IActionResult> Post([FromBody] PatioRequest request)
         {
-            if(!ModelState.IsValid) return ValidationProblem(ModelState);
+            if (!ModelState.IsValid) return ValidationProblem(ModelState);
 
             try
             {
                 var created = await patioUseCase.CreateAsync(request);
-                // 201 com body
-                return StatusCode((int)HttpStatusCode.Created, created);
+
+                var links = new
+                {
+                    self   = new { href = Url.ActionLink(nameof(GetById), values: new { id = created.Id }), method = "GET" },
+                    update = new { href = Url.ActionLink(nameof(Put),     values: new { id = created.Id }), method = "PUT" },
+                    delete = new { href = Url.ActionLink(nameof(Delete),  values: new { id = created.Id }), method = "DELETE" }
+                };
+
+                // 201 + Location + HATEOAS
+                return CreatedAtAction(nameof(GetById), new { id = created.Id }, new { data = created, _links = links });
             }
             catch (ArgumentException ex)
             {
@@ -40,12 +48,14 @@ namespace VisionHive.API.Controllers
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
-        public async Task<ActionResult<PageResult<PatioResponse>>> GetPaginate([FromQuery] PatioPaginatedRequest query)
+        public async Task<IActionResult> GetPaginate([FromQuery] PatioPaginatedRequest query)
         {
             var page = await patioUseCase.GetPagination(query);
-            var mapped = new PageResult<PatioResponse>
+
+            // itens com link próprio
+            var items = page.Items.Select(p => new
             {
-                Items = page.Items.Select(p => new PatioResponse
+                data = new PatioResponse
                 {
                     Id = p.Id,
                     Nome = p.Nome,
@@ -57,19 +67,49 @@ namespace VisionHive.API.Controllers
                         Placa = m.Placa,
                         Prioridade = m.Prioridade.ToString()
                     }).ToList()
-                }).ToList(),
-                Page = page.Page,
+                },
+                _links = new
+                {
+                    self = new { href = Url.ActionLink(nameof(GetById), values: new { id = p.Id }), method = "GET" }
+                }
+            });
+
+            // links de navegação paginada
+            var self = Url.ActionLink(nameof(GetPaginate), values: query);
+            var next = page.HasNext ? Url.ActionLink(nameof(GetPaginate), values: new
+            {
+                PageNumber = page.Page + 1,
                 PageSize = page.PageSize,
-                Total = page.Total
-            };
-            return Ok(mapped);
+                query.Search,
+                query.SortBy,
+                query.SortDir
+            }) : null;
+
+            var prev = page.HasPrevious ? Url.ActionLink(nameof(GetPaginate), values: new
+            {
+                PageNumber = page.Page - 1,
+                PageSize = page.PageSize,
+                query.Search,
+                query.SortBy,
+                query.SortDir
+            }) : null;
+
+            return Ok(new
+            {
+                items,
+                page = page.Page,
+                pageSize = page.PageSize,
+                totalItems = page.Total,
+                totalPages = page.TotalPages,
+                _links = new { self, next, prev }
+            });
         }
 
         /// <summary>Obtém um pátio por ID.</summary>
         [HttpGet("{id:guid}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult<PatioResponse>> GetById(Guid id)
+        public async Task<IActionResult> GetById(Guid id)
         {
             var entity = await patioUseCase.GetByIdAsync(id);
             if (entity is null) return NotFound("Pátio não encontrado");
@@ -88,7 +128,14 @@ namespace VisionHive.API.Controllers
                 }).ToList()
             };
 
-            return Ok(dto);
+            var links = new
+            {
+                self   = new { href = Url.ActionLink(nameof(GetById), values: new { id }), method = "GET" },
+                update = new { href = Url.ActionLink(nameof(Put),     values: new { id }), method = "PUT" },
+                delete = new { href = Url.ActionLink(nameof(Delete),  values: new { id }), method = "DELETE" }
+            };
+
+            return Ok(new { data = dto, _links = links });
         }
 
         /// <summary>Atualiza um pátio existente.</summary>
@@ -98,7 +145,7 @@ namespace VisionHive.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public async Task<IActionResult> Put(Guid id, [FromBody] PatioRequest request)
         {
-            if(!ModelState.IsValid) return ValidationProblem(ModelState);
+            if (!ModelState.IsValid) return ValidationProblem(ModelState);
             try
             {
                 var ok = await patioUseCase.UpdateAsync(id, request);
