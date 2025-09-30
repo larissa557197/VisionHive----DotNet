@@ -120,7 +120,7 @@ As rotas seguem o prefixo `api/v1` e estão no **plural**:
   "filialId": "GUID_DA_FILIAL"
 }
 ```
-**GET lista (resposta esperada**
+**GET lista (resposta esperada)**
 ```json
 {
   "items": [

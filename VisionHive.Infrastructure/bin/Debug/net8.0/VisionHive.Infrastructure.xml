@@ -105,6 +105,18 @@
         <member name="M:VisionHive.Infrastructure.Migrations.AddFilialToPatios.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:VisionHive.Infrastructure.Migrations.FinalMigration">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.FinalMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.FinalMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:VisionHive.Infrastructure.Migrations.FinalMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
         <member name="T:VisionHive.Infrastructure.Repositories.FilialRepository">
             <summary>
             Implementação de <see cref="T:VisionHive.Infrastructure.Repositories.IFilialRepository"/> usando EF Core.
