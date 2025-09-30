@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using Swashbuckle.AspNetCore.Filters;
+using VisionHive.API.SwaggerExamples;
 using VisionHive.Application.DTO.Request;
 using VisionHive.Application.DTO.Response;
 using VisionHive.Application.UseCases;
@@ -19,6 +21,8 @@ namespace VisionHive.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.InternalServerError)]
+        [SwaggerRequestExample(typeof(FilialRequest), typeof(FilialRequestExample))] // exemplo de request
+        [SwaggerResponseExample((int)HttpStatusCode.Created, typeof(FilialResponseExample))] // exemplo de response
         public async Task<IActionResult> Post([FromBody] FilialRequest request)
         {
             if (!ModelState.IsValid) return ValidationProblem(ModelState);
@@ -132,6 +136,7 @@ namespace VisionHive.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [SwaggerRequestExample(typeof(FilialRequest), typeof(FilialRequestExample))] // opcional: exemplo no PUT também
         public async Task<IActionResult> Put(Guid id, [FromBody] FilialRequest request)
         {
             if (!ModelState.IsValid) return ValidationProblem(ModelState);
