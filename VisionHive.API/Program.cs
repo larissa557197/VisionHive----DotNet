@@ -4,70 +4,92 @@ using System.Reflection;
 using VisionHive.Application;
 using VisionHive.Infrastructure;
 using VisionHive.Infrastructure.Contexts;
+using Swashbuckle.AspNetCore.Filters;
 namespace VisionHive.API;
 
 public class Program
 {
     public static void Main(string[] args)
     {
-            var builder = WebApplication.CreateBuilder(args);
+        var builder = WebApplication.CreateBuilder(args);
 
-            // Controllers + JSON options
-            builder.Services.AddControllers()
-                .AddJsonOptions(options =>
-                options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
-            
-            // Swagger/OpenAPI
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(swagger =>
+        // Controllers + JSON options
+        builder.Services.AddControllers()
+            .AddJsonOptions(options =>
+                options.JsonSerializerOptions.ReferenceHandler =
+                    System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
+
+        // Swagger/OpenAPI
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen(swagger =>
+        {
+            swagger.SwaggerDoc("v1", new OpenApiInfo()
             {
-                swagger.SwaggerDoc("v1", new OpenApiInfo()
-                {
-                    Title = "API para cadastro de Motos e areas",
-                    Version = "v1",
-                    Description = "API desenvolvida para a empresa Mottu - Projeto Vision Hive\n\n" +
-                  "Integrantes:\n" +
-                  " Larissa Muniz (RM557197) \n" +
-                  " Joao Victor Michaeli (RM555678) \n" +
-                  " Henrique Garcia (RM558062) ",
-                });
-
-                // comentários XML para gerar documentação dos métodos/classes
-                var xmls = new[]
-                {
-                    $"{Assembly.GetExecutingAssembly().GetName().Name}.xml",
-                    "VisionHive.Application.xml",
-                    "VisionHive.Domain.xml",
-                    "VisionHive.Infrastructure.xml"
-                };
-
-                foreach (var file in xmls)
-                {
-                    var path = Path.Combine(AppContext.BaseDirectory, file);
-                    if (File.Exists(path))
-                        swagger.IncludeXmlComments(path);
-                }
+                Title = "API para cadastro de Motos e áreas",
+                Version = "v1",
+                Description =
+                    "API desenvolvida para a empresa Mottu - Projeto Vision Hive\n\n" +
+                    "Integrantes:\n" +
+                    " Larissa Muniz (RM557197) \n" +
+                    " Joao Victor Michaeli (RM555678) \n" +
+                    " Henrique Garcia (RM558062) ",
             });
-                
-            // registra Infra (DbContext + repositórios ) e Application (use cases)
-            builder.Services.AddInfrastructure(builder.Configuration);
-            builder.Services.AddApplication();
-            
-            var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            // comentários XML para gerar documentação dos métodos/classes
+            var xmls = new[]
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                $"{Assembly.GetExecutingAssembly().GetName().Name}.xml",
+                "VisionHive.Application.xml",
+                "VisionHive.Domain.xml",
+                "VisionHive.Infrastructure.xml"
+            };
+
+            foreach (var file in xmls)
+            {
+                var path = Path.Combine(AppContext.BaseDirectory, file);
+                if (File.Exists(path))
+                    swagger.IncludeXmlComments(path);
             }
 
-            app.UseHttpsRedirection();
+            // 👇 habilita exemplos (request/response) no Swagger
+            swagger.ExampleFilters();
+        });
 
-            app.UseAuthorization();
+        // 👇 registra os providers de exemplos a partir deste assembly
+        builder.Services.AddSwaggerExamplesFromAssemblyOf<Program>();
 
-            app.MapControllers();
+        // registra Infra (DbContext + repositórios) e Application (use cases)
+        builder.Services.AddInfrastructure(builder.Configuration);
+        builder.Services.AddApplication();
 
-            app.Run();
+        var app = builder.Build();
+
+        // HTTP pipeline
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "VisionHive API v1");
+                c.DocumentTitle = "VisionHive API";
+            });
         }
+        else
+        {
+            // (Opcional) habilitar Swagger também em produção se quiser:
+            // app.UseSwagger();
+            // app.UseSwaggerUI();
+        }
+
+        app.UseHttpsRedirection();
+
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        app.Run();
     }
+
+}
+
+
