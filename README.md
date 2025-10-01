@@ -207,6 +207,43 @@ VisionHive.Domain/         # Entidades de domínio
 VisionHive.Infrastructure/ # EF Core, Mappings, Migrations
 VisionHive.API.Test/       # Projeto de testes
 ```
+### Justificativa da Arquitetura
+Adotamos uma **arquitetura em camadas** para separar responsabilidades e facilitar testes, manutenção e evolução
+```
+┌───────────────────┐
+│     API (Web)     │  ← Controllers, validação básica, Swagger (OpenAPI + Examples)
+└───────▲───────────┘
+        │ DTOs (Request/Response) – contrato REST desacoplado do domínio
+┌───────┴───────────┐
+│   Application     │  ← Use Cases (orquestram regras), portas/serviços
+└───────▲───────────┘
+        │ Interfaces (ex.: IFilialRepository)
+┌───────┴───────────┐
+│      Domain       │  ← Entidades, Enums, regras puras
+└───────▲───────────┘
+        │ Implementações de portas (infra de dados)
+┌───────┴───────────┐
+│  Infrastructure   │  ← EF Core (DbContext, Migrations), Repositórios
+└───────────────────┘
+
+```
+#### Porque essa arquitetura?
+- **Coesão e desacoplamento**: 
+     - Controllers só tratam HTTP; 
+     - **UseCases** encapsulam regras
+     - **Infra** apenas persiste dados 
+- **Testabilidade**: com interfaces e dependências invertidas, os use cases podem ser testados sem banco real
+- **Evolução**: trocar banco (Oracle → SQL Server) ou expor outra interface, não exige reescrever o domínio/regra
+- **Boas práticas REST**: 
+     - **DTOs** de request/response → contrato estável
+     - **Status codes** adequados (201 / 200 / 204 / 400 / 404)
+     - **Paginação + HATEOAS** para navegabilidade e discoverability
+     - **Swagger/OpenAPI** com **exemplos** e **modelos** claros, ajudando DX e correção acadêmica
+#### Descisões técnicas
+- **.NET 8 Web API** pela maturidade, tooling e integração nativa com Swagger
+- **EF Core** para mapeamento ORM e **Migrations** (versionamento de esquema)
+- **Swashbuckle + Filters** para exemplos reais de payloads no Swagger
+- **DTOs** evitam vazar o modelo de domínio e permitem versionar a API sem quebrar clientes
 
 ---
 
