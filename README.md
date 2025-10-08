@@ -193,6 +193,11 @@ As rotas seguem o prefixo `api/v1` e estão no **plural**:
 
 ---
 
+### Rodar os testes (Opcional, mas recomendado)
+`dotnet test VisionHive.API.Test`
+
+---
+
 ## 🧭 HATEOAS & Paginação
 - **Detalhe** (`GET / {id}`): `_links.self`, `_links.update`, `_links.delete`
 - **Lista** (`GET /`): cada item com `_links.self` e, no nível da página, `_links.self/next/prev` + `page`, `pageSize`, `totalItems`, `totalPages`
