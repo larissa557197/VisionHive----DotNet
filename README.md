@@ -50,6 +50,10 @@ dotnet ef database update   --project VisionHive.Infrastructure   --startup-proj
 
 # 5. Rodar a API
 dotnet run --project VisionHive.API
+
+
+#6. Rodar os Testes
+dotnet test VisionHive.API.Test
 ```
 
 📍 A API sobe por padrão em:  
@@ -190,11 +194,6 @@ As rotas seguem o prefixo `api/v1` e estão no **plural**:
 
 > **Prioridade**:  
 > `1 = Baixa | 2 = Média | 3 = Alta | 4 = Sucata`
-
----
-
-### Rodar os testes (Opcional, mas recomendado)
-`dotnet test VisionHive.API.Test`
 
 ---
 
