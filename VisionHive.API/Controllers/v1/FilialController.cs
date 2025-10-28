@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Net;
+using Asp.Versioning;
 using Swashbuckle.AspNetCore.Filters;
 using VisionHive.API.SwaggerExamples;
 using VisionHive.Application.DTO.Request;
 using VisionHive.Application.DTO.Response;
+
 using VisionHive.Application.UseCases;
-using VisionHive.Domain.Pagination;
-using VisionHive.Infrastructure.Contexts;
+
 
 namespace VisionHive.API.Controllers
 {
-    [Route("api/v1/filiais")]
-    //[Tags("Filiais")]
+    [Route("api/v{version:apiVersion}/filiais")]
     [ApiController]
+    [Asp.Versioning.ApiVersion(1.0)]
     public class FilialController(IFilialUseCase filialUseCase) : ControllerBase
     {
         /// <summary>Cria uma nova filial.</summary>
