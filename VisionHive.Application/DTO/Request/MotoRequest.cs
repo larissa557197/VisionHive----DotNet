@@ -18,6 +18,10 @@ namespace VisionHive.Application.DTO.Request
         [Required]
         public Prioridade Prioridade { get; set; }
         
+        // identificador da filial onde a moto está vinculada
+        [Required]
+        public Guid FilialId { get; set; }
+        
         // identificador do pátio onde a moto está vinculada
         [Required]
         public Guid PatioId { get; set; }
