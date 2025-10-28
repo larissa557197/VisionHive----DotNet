@@ -5,16 +5,15 @@ using Swashbuckle.AspNetCore.Filters;
 using VisionHive.API.SwaggerExamples;
 using VisionHive.Application.DTO.Request;
 using VisionHive.Application.DTO.Response;
-using VisionHive.Application.UseCases;
-using VisionHive.Domain.Pagination;
-using VisionHive.Infrastructure.Contexts;
+using VisionHive.Application.UseCases; 
+
 
 /// <summary>Endpoints REST para a entidade Pátio.</summary>
 namespace VisionHive.API.Controllers
 {
-    [Route("api/v1/patios")]
-    //[Tags("Patios")]
+    [Route("api/v{version:apiVersion}/patios")]
     [ApiController]
+    [Asp.Versioning.ApiVersion(1.0)]
     public class PatioController(IPatioUseCase patioUseCase) : ControllerBase
     {
         /// <summary>Cria um novo pátio.</summary>
