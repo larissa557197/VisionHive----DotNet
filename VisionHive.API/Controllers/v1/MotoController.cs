@@ -18,9 +18,9 @@ namespace VisionHive.API.Controllers
     /// <summary>
     /// Endpoints REST para a entidade Moto
     /// </summary>
-    [Route("api/v1/motos")]
-    //[Tags("Motos")]
+    [Route("api/v{version:apiVersion}/motos")]
     [ApiController]
+    [Asp.Versioning.ApiVersion(1.0)]
     public class MotoController(IMotoUseCase motoUseCase) : ControllerBase
     {
         /// <summary>
