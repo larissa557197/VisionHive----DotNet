@@ -1,17 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Swashbuckle.AspNetCore.Filters;
 using VisionHive.API.SwaggerExamples;
 using VisionHive.Application.DTO.Request;
 using VisionHive.Application.DTO.Response;
-using VisionHive.Domain.Enums;
 using VisionHive.Application.UseCases;
-using VisionHive.Domain.Entities;
-using VisionHive.Domain.Pagination;
-using VisionHive.Infrastructure.Contexts;
-using VisionHive.Infrastructure.Repositories;
+
 
 namespace VisionHive.API.Controllers
 {
