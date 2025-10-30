@@ -14,7 +14,7 @@ namespace VisionHive.API.Controllers
     /// </summary>
     [Route("api/v{version:apiVersion}/motos")]
     [ApiController]
-    [Asp.Versioning.ApiVersion(1.0)]
+    [Asp.Versioning.ApiVersion(1.0)] //forçando desse jeito
     public class MotoController(IMotoUseCase motoUseCase) : ControllerBase
     {
         /// <summary>
