@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Net;
+﻿using System.Net;
 using Swashbuckle.AspNetCore.Filters;
 using VisionHive.API.SwaggerExamples;
 using VisionHive.Application.DTO.Request;
 using VisionHive.Application.DTO.Response;
-using VisionHive.Application.UseCases; 
+using VisionHive.Application.UseCases;
+using Microsoft.AspNetCore.Mvc;
 
 
 /// <summary>Endpoints REST para a entidade Pátio.</summary>
