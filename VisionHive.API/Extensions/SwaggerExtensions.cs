@@ -1,69 +1,102 @@
 ﻿using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using VisionHive.Application.Configs;
 
-namespace VisionHive.API.Extensions;
-
-public static class SwaggerExtensions
+namespace VisionHive.API.Extensions
 {
-     public static IServiceCollection AddSwagger(this IServiceCollection services, SwaggerSettings settings)
+    public static class SwaggerExtensions
     {
-        return services.AddSwaggerGen(swagger =>
+        public static IServiceCollection AddSwagger(this IServiceCollection services, SwaggerSettings settings)
         {
-            // Documentação v1 - Oracle
-            swagger.SwaggerDoc("v1", new OpenApiInfo
+            return services.AddSwaggerGen(swagger =>
             {
-                Title = settings.Title,
-                Version = "v1",
-                Description = settings.Description,
-                Contact = settings.Contact
-            });
-
-            // Documentação v2 - MongoDB
-            swagger.SwaggerDoc("v2", new OpenApiInfo
-            {
-                Title = settings.Title + " v2",
-                Version = "v2",
-                Description = settings.Description,
-                Contact = settings.Contact
-            });
-
-            // Servidores (URLs) — adiciona dinamicamente os servers do appsettings.Development.json
-            swagger.AddServer(new OpenApiServer());
-            foreach (var server in settings.Servers)
-            {
-                swagger.AddServer(new OpenApiServer
+                // Documentação da v1 (Oracle)
+                swagger.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Url = server.Url,
-                    Description = server.Description
+                    Title = settings.Title,
+                    Version = "v1",
+                    Description = settings.Description,
+                    Contact = settings.Contact
                 });
-            }
 
-            // Segurança (JWT)
-            swagger.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-            {
-                Name = "Authorization",
-                Description = "Autenticação e autorização via JWT",
-                In = ParameterLocation.Header,
-                Type = SecuritySchemeType.ApiKey,
-                Scheme = "Bearer",
-                BearerFormat = "JWT",
-            });
-
-            swagger.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
+                // Documentação da v2 (MongoDB + JWT)
+                swagger.SwaggerDoc("v2", new OpenApiInfo
                 {
-                    new OpenApiSecurityScheme
+                    Title = settings.Title + " v2",
+                    Version = "v2",
+                    Description = settings.Description + " (MongoDB + JWT)",
+                    Contact = settings.Contact
+                });
+
+                // Servidores definidos no appsettings
+                if (settings.Servers is not null)
+                {
+                    foreach (var server in settings.Servers)
                     {
-                        Reference = new OpenApiReference
+                        swagger.AddServer(new OpenApiServer
                         {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                        }
-                    },
-                    Array.Empty<string>()
+                            Url = server.Url,
+                            Description = server.Description
+                        });
+                    }
                 }
+
+                // Definição do esquema Bearer (JWT)
+                swagger.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Description = " **Autenticação e autorização via JWT**\n\n" +
+                                  " 1. Faça login usando o endpoint `/api/v2/auth/login`\n" +
+                                  " 2. Copie o token retornado no campo `accessToken`\n" +
+                                  " 3. Clique em *Authorize* e insira:\n\n" +
+                                  "`Bearer {seu_token_aqui}`\n\n" +
+                                  "O token expira em 1 hora.",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT"
+                });
+
+
+                // Requisito de segurança (global)
+                swagger.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
+
+                //  Força as rotas com [Authorize] a exibirem cadeado fechado
+                swagger.OperationFilter<AuthorizeCheckOperationFilter>();
+
+                //  Corrige bug do Swagger com versionamento múltiplo
+                swagger.DocInclusionPredicate((docName, apiDesc) =>
+                {
+                    if (!apiDesc.TryGetMethodInfo(out var methodInfo))
+                        return false;
+
+                    var versions = methodInfo.DeclaringType?
+                        .GetCustomAttributes(true)
+                        .OfType<Asp.Versioning.ApiVersionAttribute>()
+                        .SelectMany(attr => attr.Versions);
+
+                    if (versions is null)
+                        return docName == "v1"; // fallback
+
+                    return versions.Any(v => $"v{v.MajorVersion}" == docName);
+                });
             });
-        });
+        }
     }
+
 }
+
 
