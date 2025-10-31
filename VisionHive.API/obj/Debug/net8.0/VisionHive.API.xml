@@ -67,5 +67,82 @@
         <member name="M:VisionHive.API.Controllers.PatioController.Delete(System.Guid)">
             <summary>Remove um pátio pelo ID.</summary>
         </member>
+        <member name="M:VisionHive.API.Controllers.v2.FilialControllerV2.Post(VisionHive.Application.DTO.Request.FilialRequest)">
+            <summary>
+            POST - Cria uma nova Filial (Mongo)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:VisionHive.API.Controllers.v2.FilialControllerV2.GetAll">
+            <summary>
+            GET - Lista todas as  Filiais (Mongo)
+            </summary>
+        </member>
+        <member name="M:VisionHive.API.Controllers.v2.FilialControllerV2.GetById(System.Guid)">
+            <summary>
+            GET - Busca uma Filial pelo ID (Mongo)
+            </summary>
+        </member>
+        <member name="M:VisionHive.API.Controllers.v2.FilialControllerV2.Put(System.Guid,VisionHive.Application.DTO.Request.FilialRequest)">
+            <summary>
+            PUT - Atualiza uma filial existente (MongoDB)
+            </summary>
+        </member>
+        <member name="M:VisionHive.API.Controllers.v2.FilialControllerV2.Delete(System.Guid)">
+            <summary>
+            DELETE - Remove uma filial existente (MongoDB)
+            </summary>
+        </member>
+        <member name="M:VisionHive.API.Controllers.v2.MotoControllerV2.Post(VisionHive.Application.DTO.Request.MotoRequest)">
+            <summary>
+            POST - Cria uma nova Moto (Mongo)
+            </summary>
+        </member>
+        <member name="M:VisionHive.API.Controllers.v2.MotoControllerV2.GetAll">
+            <summary>
+            GET - Lista todas as Motos (Mongo)
+            </summary>
+        </member>
+        <member name="M:VisionHive.API.Controllers.v2.MotoControllerV2.GetById(System.Guid)">
+            <summary>
+            GET - Busca uma Moto pelo ID (Mongo)
+            </summary>
+        </member>
+        <member name="M:VisionHive.API.Controllers.v2.MotoControllerV2.Put(System.Guid,VisionHive.Application.DTO.Request.MotoRequest)">
+            <summary>
+            PUT - Aatualiza Moto existente (Mongo)
+            </summary>
+        </member>
+        <member name="M:VisionHive.API.Controllers.v2.MotoControllerV2.Delete(System.Guid)">
+            <summary>
+            DELETE - Remove uma Moto pelo ID (Mongo)
+            </summary>
+        </member>
+        <member name="M:VisionHive.API.Controllers.v2.PatioControllerV2.Post(VisionHive.Application.DTO.Request.PatioRequest)">
+            <summary>
+            POST - Cria um novo Pátio (Mongo)
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:VisionHive.API.Controllers.v2.PatioControllerV2.GetAll" -->
+        <member name="M:VisionHive.API.Controllers.v2.PatioControllerV2.GetById(System.Guid)">
+            <summary>
+            GET - Busca um pátio pelo ID (Mongo)
+            </summary>
+        </member>
+        <member name="M:VisionHive.API.Controllers.v2.PatioControllerV2.Put(System.Guid,VisionHive.Application.DTO.Request.PatioRequest)">
+            <summary>
+            PUT - Atualiza um pátio existente (Mongo)
+            </summary>
+        </member>
+        <member name="M:VisionHive.API.Controllers.v2.PatioControllerV2.Delete(System.Guid)">
+            <summary>
+            DELETE - Remove um pátio pelo ID (Mongo)
+            </summary>
+        </member>
+        <member name="T:VisionHive.API.Extensions.AuthorizeCheckOperationFilter">
+            <summary>
+            Força o Swagger a marcar operações com [Authorize] como protegidas (cadeado fechado).
+            </summary>
+        </member>
     </members>
 </doc>

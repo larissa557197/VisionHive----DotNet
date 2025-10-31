@@ -60,7 +60,19 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Asp.Versioning.Http": {
+              "target": "Package",
+              "version": "[8.1.0, )"
+            },
+            "Asp.Versioning.Mvc.ApiExplorer": {
+              "target": "Package",
+              "version": "[8.1.0, )"
+            },
             "AspNetCore.HealthChecks.MongoDb": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "AspNetCore.HealthChecks.Oracle": {
               "target": "Package",
               "version": "[9.0.0, )"
             },
@@ -68,9 +80,17 @@
               "target": "Package",
               "version": "[9.0.0, )"
             },
+            "AspNetCore.HealthChecks.Uris": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
             "EntityFramework": {
               "target": "Package",
               "version": "[6.5.1, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.8, )"
             },
             "Microsoft.AspNetCore.Mvc.Versioning": {
               "target": "Package",
@@ -90,6 +110,10 @@
               "target": "Package",
               "version": "[9.0.10, )"
             },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[8.14.0, )"
+            },
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[3.5.0, )"
@@ -98,13 +122,21 @@
               "target": "Package",
               "version": "[9.23.90, )"
             },
+            "Oracle.ManagedDataAccess.Core": {
+              "target": "Package",
+              "version": "[23.26.0, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[9.0.6, )"
+              "version": "[6.5.0, )"
             },
             "Swashbuckle.AspNetCore.Filters": {
               "target": "Package",
               "version": "[7.0.6, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[8.14.0, )"
             }
           },
           "imports": [
@@ -187,6 +219,10 @@
               "target": "Package",
               "version": "[6.5.1, )"
             },
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[12.0.0, )"
+            },
             "FluentValidation.AspNetCore": {
               "target": "Package",
               "version": "[11.3.1, )"
@@ -200,6 +236,14 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.8, )"
+            },
+            "Microsoft.OpenApi": {
+              "target": "Package",
+              "version": "[1.6.25, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[3.5.0, )"
             },
             "Oracle.EntityFrameworkCore": {
               "target": "Package",
@@ -374,6 +418,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.8, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[3.5.0, )"
             },
             "Oracle.EntityFrameworkCore": {
               "target": "Package",

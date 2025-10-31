@@ -4,11 +4,6 @@
         <name>VisionHive.Application</name>
     </assembly>
     <members>
-        <member name="M:VisionHive.Application.DependencyInjection.AddApplication(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-            Registra os casos de uso da aplicação (camada Application).
-            </summary>
-        </member>
         <member name="T:VisionHive.Application.DTO.Request.FilialPaginatedRequest">
             <summary>
             Parâmetros de paginação, busca e ordenação para listar <c>Filial</c>.
@@ -52,6 +47,17 @@
         <member name="P:VisionHive.Application.DTO.Request.FilialRequest.Cnpj">
             <summary>CNPJ da filial.</summary>
             <example>12.345.678/0001-99</example>
+        </member>
+        <member name="T:VisionHive.Application.DTO.Request.LoginRequest">
+            <summary>
+            Modelo simples para login (email + password).
+            </summary>
+        </member>
+        <member name="P:VisionHive.Application.DTO.Request.LoginRequest.Email">
+            <summary>Nome de usuário (ex: admin)</summary>
+        </member>
+        <member name="P:VisionHive.Application.DTO.Request.LoginRequest.Password">
+            <summary>Senha do usuário (ex: 1234)</summary>
         </member>
         <member name="T:VisionHive.Application.DTO.Request.PatioPaginatedRequest">
             <summary>

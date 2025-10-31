@@ -3,11 +3,11 @@
     public class Filial
     {
         
-        protected Filial(){}
-        public Guid Id {  get; private set; }
-        public string Nome { get; private set; }
-        public string Bairro { get; private set; }
-        public string Cnpj { get; private set; }
+        public Filial(){}
+        public Guid Id {  get; set; }
+        public string Nome { get; set; }
+        public string Bairro { get; set; }
+        public string Cnpj { get; set; }
 
         public ICollection<Patio> Patios { get; set; } = new List<Patio>();
 

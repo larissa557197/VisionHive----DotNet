@@ -6,7 +6,7 @@
     <members>
         <member name="M:VisionHive.Infrastructure.DependencyInjection.AddInfrastructure(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
-            Método único para registrar DbContext + Repositórios, no padrão do professor.
+            Método único para registrar DbContext + Mongo + Repositórios
             </summary>
         </member>
         <member name="T:VisionHive.Infrastructure.Migrations.InitialCreate">
