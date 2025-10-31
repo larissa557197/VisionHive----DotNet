@@ -14,6 +14,7 @@ namespace VisionHive.API.Controllers
     [Asp.Versioning.ApiVersion(2.0)]
     public class AuthController : ControllerBase
     {
+        // jwt
         private readonly IConfiguration _config;
 
         public AuthController(IConfiguration config)
