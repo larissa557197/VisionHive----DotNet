@@ -1,10 +1,11 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using System.Reflection;
+using System.Text;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.IdentityModel.Tokens;
 using VisionHive.Application;
 using VisionHive.Infrastructure;
-using VisionHive.Infrastructure.Contexts;
-using Swashbuckle.AspNetCore.Filters;
+using VisionHive.API.Extensions;
+using VisionHive.Application.Configs;
+
 namespace VisionHive.API;
 
 public class Program
@@ -13,75 +14,93 @@ public class Program
     {
        var builder = WebApplication.CreateBuilder(args);
 
+       // carrega as configurações combinadas (appsettings + appsettings.Development)
+       var settings = builder.Configuration.Get<Settings>();
+       
         // Controllers + JSON options
         builder.Services.AddControllers()
             .AddJsonOptions(options =>
                 options.JsonSerializerOptions.ReferenceHandler =
                     System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
 
-        // Swagger/OpenAPI
+        // Swagger (usa configuraçções do appsettings.json)
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen(swagger =>
+        builder.Services.AddSwagger(settings.Swagger);
+        
+        // versionamento da API
+        builder.Services.AddVersioning();
+        
+        // Health Checks (Oracle + MongoDB + URLS)
+        builder.Services.AddChecks(settings);
+        
+        // Dependency Injection das camadas
+        builder.Services.AddApplication();
+        builder.Services.AddInfrastructure(builder.Configuration);
+        builder.Services.AddUseCases();
+        
+        // CORS (libera para todos os dominios
+        builder.Services.AddCors(options =>
         {
-            swagger.SwaggerDoc("v1", new OpenApiInfo()
+            options.AddPolicy("AllowAll", policy =>
             {
-                Title = "API para cadastro de Motos e áreas",
-                Version = "v1",
-                Description =
-                    "API desenvolvida para a empresa Mottu - Projeto Vision Hive\n\n" +
-                    "Integrantes:\n" +
-                    " Larissa Muniz (RM557197) \n" +
-                    " Joao Victor Michaeli (RM555678) \n" +
-                    " Henrique Garcia (RM558062) ",
+                policy.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+
+            });
+        });
+        
+        // Autenticação (JWT) - usa a SecretKey do appsettingsDevelopment.json
+        builder.Services.AddAuthentication("Bearer")
+            .AddJwtBearer("Bearer", options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"])),
+
+                };
+
             });
 
-            // comentários XML para gerar documentação dos métodos/classes
-            var xmls = new[]
-            {
-                $"{Assembly.GetExecutingAssembly().GetName().Name}.xml",
-                "VisionHive.Application.xml",
-                "VisionHive.Domain.xml",
-                "VisionHive.Infrastructure.xml"
-            };
+        
+        builder.Services.AddAuthorization();
 
-            foreach (var file in xmls)
-            {
-                var path = Path.Combine(AppContext.BaseDirectory, file);
-                if (File.Exists(path))
-                    swagger.IncludeXmlComments(path);
-            }
-
-            // habilita exemplos (request/response) no Swagger
-            swagger.ExampleFilters();
-        });
-
-        // registra os providers de exemplos a partir deste assembly
-        builder.Services.AddSwaggerExamplesFromAssemblyOf<Program>();
-
-        // registra Infra (DbContext + repositórios) e Application (use cases)
-        builder.Services.AddInfrastructure(builder.Configuration);
-        builder.Services.AddApplication();
 
         var app = builder.Build();
 
-        // HTTP pipeline - Swagger sempre ativo enquanto testa
+        // Swagger (V1 + V2)
         app.UseSwagger();
-        app.UseSwaggerUI(c =>
+        app.UseSwaggerUI(ui =>
         {
-            // usa caminho ABSOLUTO correto
-            c.SwaggerEndpoint("/swagger/v1/swagger.json", "VisionHive API v1");
-            // mude o prefixo para forçar uma nova URL (evita cache do index.html)
-            c.RoutePrefix = "docs";
-            c.DocumentTitle = "VisionHive API";
-            // desliga o validador externo do swagger.io
-            c.ConfigObject.AdditionalItems["validatorUrl"] = null;
+            ui.SwaggerEndpoint("/swagger/v1/swagger.json", "VisionHive API v1 (Oracle)");
+            ui.SwaggerEndpoint("/swagger/v2/swagger.json", "VisionHive API v2 (MongoDB + JWT)");
+            ui.RoutePrefix = "swagger";
+            ui.DocumentTitle = "VisionHive API";
+
+            // Desabilita validação externa
+            ui.ConfigObject.AdditionalItems["validatorUrl"] = null;
+
+            //  Injeta script para forçar ícones de bloqueio no Swagger UI
+            ui.InjectJavascript("/swagger-lock-fix.js");
         });
 
-        app.UseHttpsRedirection();
 
+        // middlewares principais
+        app.UseHttpsRedirection();
+        app.UseCors("AllowAll");
+        app.UseAuthentication();
         app.UseAuthorization();
 
+        // controllers + healthcheck
         app.MapControllers();
+        app.MapHealthChecks("/health", new HealthCheckOptions
+        {
+            ResponseWriter = HealthCheckExtensions.WriteResponse
+        });
 
         app.Run();
     }
