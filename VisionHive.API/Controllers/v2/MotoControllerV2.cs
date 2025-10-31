@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VisionHive.Application.DTO.Request;
 using VisionHive.Domain.Entities;
 using VisionHive.Infrastructure.Repositories.Mongo;
 
 namespace VisionHive.API.Controllers.v2
 {
-    [Route("api/v{version/apiVersion}/motos")]
+    [Authorize]
+    [Route("api/v{apiVersion:apiVersion}/motos")]
     [ApiController]
     [Asp.Versioning.ApiVersion(2.0)]
     public class MotoControllerV2 : ControllerBase

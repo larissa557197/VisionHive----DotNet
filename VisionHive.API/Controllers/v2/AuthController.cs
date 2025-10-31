@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using VisionHive.Application.DTO.Request;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
 
@@ -8,31 +10,47 @@ namespace VisionHive.API.Controllers
 
 {
     [ApiController]
-    [Route("api/v1/auth")]
+    [Route("api/v{apiVersion:apiVersion}/auth")]
+    [Asp.Versioning.ApiVersion(2.0)]
     public class AuthController : ControllerBase
     {
-        [HttpPost("login")]
-        public IActionResult Login(string username = "admin", string password = "1234")
+        private readonly IConfiguration _config;
+
+        public AuthController(IConfiguration config)
         {
-            if (username != "admin" || password != "1234")
-                return Unauthorized(new { message = "Credenciais inválidas" });
-
-            var key = Encoding.UTF8.GetBytes("super-secret-key-visionhive");
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, username) }),
-                Expires = DateTime.UtcNow.AddHours(1),
-                SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(key),
-                    SecurityAlgorithms.HmacSha256Signature)
-            };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
-
-            return Ok(new { token = tokenString });
+            _config = config;
         }
-    
+
+        //  Esta rota é pública — não precisa de token
+        [HttpPost("login")]
+        [AllowAnonymous]
+        public IActionResult Login([FromBody] LoginRequest request)
+        {
+            // exemplo simples: usuário fixo
+            if (request.Email == "admin@fiap.com" && request.Password == "123456")
+            {
+                var secretKey = _config["Jwt:SecretKey"];
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+
+                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+                var token = new JwtSecurityToken(
+                    expires: DateTime.UtcNow.AddHours(1),
+                    signingCredentials: creds,
+                    claims: new[]
+                    {
+                        new Claim(JwtRegisteredClaimNames.Sub, request.Email),
+                        new Claim("role", "admin")
+                    });
+
+                return Ok(new
+                {
+                    token = new JwtSecurityTokenHandler().WriteToken(token),
+                    expires_in = "1h"
+                });
+            }
+
+            return Unauthorized(new { message = "Credenciais inválidas" });
+        }
     }
 }

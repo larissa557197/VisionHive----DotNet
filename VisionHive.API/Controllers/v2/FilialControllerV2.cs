@@ -1,13 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Asp.Versioning;
 using VisionHive.Application.DTO.Request;
 using VisionHive.Domain.Entities;
 using VisionHive.Infrastructure.Repositories.Mongo;
 
 namespace VisionHive.API.Controllers.v2
 {
-    [Route("api/v{version:apiVersion}/filiais")]
+    [Authorize]
     [ApiController]
     [Asp.Versioning.ApiVersion(2.0)]
+    [Route("api/v{apiVersion:apiVersion}/filiais")]
+ 
     public class FilialControllerV2 : ControllerBase
     {
         private readonly FilialMongoRepository _repository;
@@ -59,6 +63,7 @@ namespace VisionHive.API.Controllers.v2
         /// <summary>
         /// GET - Busca uma Filial pelo ID (Mongo)
         /// </summary>
+        [HttpGet("{id:guid}")]
         [ProducesResponseType(typeof(Filial), 200)]
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetById(Guid id)

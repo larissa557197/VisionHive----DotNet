@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using VisionHive.Application.DTO.Request;
 using VisionHive.Domain.Entities;
 using VisionHive.Infrastructure.Repositories.Mongo;
 
 namespace VisionHive.API.Controllers.v2
 {
-    [Route("api/v{version:apiVersion}/patios")]
+    [Authorize]
+    [Route("api/v{apiVersion:apiVersion}/patios")]
     [Asp.Versioning.ApiVersion(2.0)]
     [ApiController]
     public class PatioControllerV2 : ControllerBase
