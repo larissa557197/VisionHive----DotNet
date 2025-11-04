@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "dgSpecHash": "RB9tM8L5pTQ=",
-  "success": true,
+  "dgSpecHash": "FsJWBUzrpek=",
+  "success": false,
   "projectFilePath": "C:\\Users\\laris\\VisionHive----DotNet\\VisionHive.API\\VisionHive.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\laris\\.nuget\\packages\\asp.versioning.abstractions\\8.1.0\\asp.versioning.abstractions.8.1.0.nupkg.sha512",
@@ -20,7 +20,6 @@
     "C:\\Users\\laris\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.11.0\\fluentvalidation.dependencyinjectionextensions.11.11.0.nupkg.sha512",
     "C:\\Users\\laris\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\laris\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.8\\microsoft.aspnetcore.authentication.jwtbearer.8.0.8.nupkg.sha512",
-    "C:\\Users\\laris\\.nuget\\packages\\microsoft.aspnetcore.mvc.versioning\\5.1.0\\microsoft.aspnetcore.mvc.versioning.5.1.0.nupkg.sha512",
     "C:\\Users\\laris\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\9.0.10\\microsoft.bcl.asyncinterfaces.9.0.10.nupkg.sha512",
     "C:\\Users\\laris\\.nuget\\packages\\microsoft.build.framework\\17.8.3\\microsoft.build.framework.17.8.3.nupkg.sha512",
     "C:\\Users\\laris\\.nuget\\packages\\microsoft.build.locator\\1.7.8\\microsoft.build.locator.1.7.8.nupkg.sha512",
@@ -115,5 +114,17 @@
     "C:\\Users\\laris\\.nuget\\packages\\system.threading.channels\\7.0.0\\system.threading.channels.7.0.0.nupkg.sha512",
     "C:\\Users\\laris\\.nuget\\packages\\zstdsharp.port\\0.7.3\\zstdsharp.port.0.7.3.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1102",
+      "level": "Error",
+      "message": "Unable to find package MongoDB.Driver.Core with version (>= 3.5.0)\r\n  - Found 97 version(s) in nuget.org [ Nearest version: 2.30.0 ]\r\n  - Found 0 version(s) in Microsoft Visual Studio Offline Packages",
+      "projectPath": "C:\\Users\\laris\\VisionHive----DotNet\\VisionHive.API\\VisionHive.API.csproj",
+      "filePath": "C:\\Users\\laris\\VisionHive----DotNet\\VisionHive.API\\VisionHive.API.csproj",
+      "libraryId": "MongoDB.Driver.Core",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }

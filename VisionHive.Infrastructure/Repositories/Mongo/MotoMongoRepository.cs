@@ -10,9 +10,10 @@ public class MotoMongoRepository
 {
     private readonly IMongoCollection<Moto> _collection;
 
-    public MotoMongoRepository(IMongoDatabase database)
+    public MotoMongoRepository(IMongoDatabase? database)
     {
-        try
+        /*
+         * try
         {
             BsonSerializer.RegisterSerializer(typeof(Guid), new GuidSerializer(GuidRepresentation.Standard));
         }
@@ -22,23 +23,28 @@ public class MotoMongoRepository
         }
 
         _collection = database.GetCollection<Moto>("Motos");
+         */
+        if (database != null)
+            _collection = database.GetCollection<Moto>("Motos");
+        else
+            _collection = null!;
     }
     
     // CREATE
-    public async Task<Moto> CreateAsync(Moto moto)
+    public virtual async Task<Moto> CreateAsync(Moto moto)
     {
         await _collection.InsertOneAsync(moto);
         return moto;
     }
     
     // READ - Todos
-    public async Task<List<Moto>> GetAllAsync()
+    public virtual async Task<List<Moto>> GetAllAsync()
     {
         return await _collection.Find(p=>true).ToListAsync();
     }
     
     // READ - por ID
-    public async Task<Moto?> GetByIdAsync(Guid id)
+    public virtual async Task<Moto?> GetByIdAsync(Guid id)
     {
         var filter = Builders<Moto>.Filter.Or(
             Builders<Moto>.Filter.Eq(m => m.Id, id),
@@ -49,7 +55,7 @@ public class MotoMongoRepository
     }
     
     // UPDATE
-    public async Task<bool> UpdateAsync(Moto moto)
+    public virtual async Task<bool> UpdateAsync(Moto moto)
     {
         var filter = Builders<Moto>.Filter.Eq(m => m.Id, moto.Id);
         var result = await _collection.ReplaceOneAsync(filter, moto);
@@ -57,7 +63,7 @@ public class MotoMongoRepository
     }
     
     // DELETE
-    public async Task<bool> DeleteAsync(Guid id)
+    public virtual async Task<bool> DeleteAsync(Guid id)
     {
         var result = await _collection.DeleteOneAsync(p => p.Id == id);
         return result.DeletedCount > 0;
