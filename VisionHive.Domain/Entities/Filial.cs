@@ -1,9 +1,10 @@
-﻿namespace VisionHive.Domain.Entities
+﻿
+
+namespace VisionHive.Domain.Entities
 {
     public class Filial
     {
         
-        public Filial(){}
         public Guid Id {  get; set; }
         public string Nome { get; set; }
         public string Bairro { get; set; }
@@ -11,6 +12,9 @@
 
         public ICollection<Patio> Patios { get; set; } = new List<Patio>();
 
+        
+        public Filial(){}
+        
         public Filial(string nome, string bairro, string cnpj)
         {
             Validar(nome, bairro, cnpj);

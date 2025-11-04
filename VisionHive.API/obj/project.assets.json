@@ -6087,14 +6087,13 @@
       "Microsoft.EntityFrameworkCore.Design >= 9.0.8",
       "Microsoft.Extensions.Diagnostics.HealthChecks >= 9.0.10",
       "Microsoft.IdentityModel.Tokens >= 8.14.0",
-      "MongoDB.Bson >= 3.5.0",
       "MongoDB.Driver >= 3.5.0",
-      "MongoDB.Driver.Core >= 3.5.0",
       "Oracle.EntityFrameworkCore >= 9.23.90",
       "Oracle.ManagedDataAccess.Core >= 23.26.0",
       "Swashbuckle.AspNetCore >= 6.5.0",
       "Swashbuckle.AspNetCore.Filters >= 7.0.6",
       "System.IdentityModel.Tokens.Jwt >= 8.14.0",
+      "System.Text.Json >= 9.0.8",
       "VisionHive.Application >= 1.0.0",
       "VisionHive.Domain >= 1.0.0",
       "VisionHive.Infrastructure >= 1.0.0"
@@ -6210,15 +6209,7 @@
             "target": "Package",
             "version": "[8.14.0, )"
           },
-          "MongoDB.Bson": {
-            "target": "Package",
-            "version": "[3.5.0, )"
-          },
           "MongoDB.Driver": {
-            "target": "Package",
-            "version": "[3.5.0, )"
-          },
-          "MongoDB.Driver.Core": {
             "target": "Package",
             "version": "[3.5.0, )"
           },
@@ -6241,6 +6232,10 @@
           "System.IdentityModel.Tokens.Jwt": {
             "target": "Package",
             "version": "[8.14.0, )"
+          },
+          "System.Text.Json": {
+            "target": "Package",
+            "version": "[9.0.8, )"
           }
         },
         "imports": [
@@ -6265,16 +6260,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1102",
-      "level": "Error",
-      "message": "Unable to find package MongoDB.Driver.Core with version (>= 3.5.0)\r\n  - Found 97 version(s) in nuget.org [ Nearest version: 2.30.0 ]\r\n  - Found 0 version(s) in Microsoft Visual Studio Offline Packages",
-      "libraryId": "MongoDB.Driver.Core",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  }
 }

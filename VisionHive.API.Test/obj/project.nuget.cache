@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "dgSpecHash": "JFwL0XStRnE=",
-  "success": false,
+  "dgSpecHash": "2frEXPC0J3Y=",
+  "success": true,
   "projectFilePath": "C:\\Users\\laris\\VisionHive----DotNet\\VisionHive.API.Test\\VisionHive.API.Test.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\laris\\.nuget\\packages\\asp.versioning.abstractions\\8.1.0\\asp.versioning.abstractions.8.1.0.nupkg.sha512",
@@ -107,7 +107,7 @@
     "C:\\Users\\laris\\.nuget\\packages\\system.directoryservices.protocols\\8.0.2\\system.directoryservices.protocols.8.0.2.nupkg.sha512",
     "C:\\Users\\laris\\.nuget\\packages\\system.formats.asn1\\8.0.1\\system.formats.asn1.8.0.1.nupkg.sha512",
     "C:\\Users\\laris\\.nuget\\packages\\system.identitymodel.tokens.jwt\\8.14.0\\system.identitymodel.tokens.jwt.8.14.0.nupkg.sha512",
-    "C:\\Users\\laris\\.nuget\\packages\\system.io.pipelines\\8.0.0\\system.io.pipelines.8.0.0.nupkg.sha512",
+    "C:\\Users\\laris\\.nuget\\packages\\system.io.pipelines\\9.0.8\\system.io.pipelines.9.0.8.nupkg.sha512",
     "C:\\Users\\laris\\.nuget\\packages\\system.memory\\4.6.0\\system.memory.4.6.0.nupkg.sha512",
     "C:\\Users\\laris\\.nuget\\packages\\system.reflection.metadata\\1.6.0\\system.reflection.metadata.1.6.0.nupkg.sha512",
     "C:\\Users\\laris\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
@@ -115,8 +115,8 @@
     "C:\\Users\\laris\\.nuget\\packages\\system.security.cryptography.pkcs\\8.0.1\\system.security.cryptography.pkcs.8.0.1.nupkg.sha512",
     "C:\\Users\\laris\\.nuget\\packages\\system.security.cryptography.protecteddata\\8.0.0\\system.security.cryptography.protecteddata.8.0.0.nupkg.sha512",
     "C:\\Users\\laris\\.nuget\\packages\\system.security.principal.windows\\5.0.0\\system.security.principal.windows.5.0.0.nupkg.sha512",
-    "C:\\Users\\laris\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512",
-    "C:\\Users\\laris\\.nuget\\packages\\system.text.json\\8.0.4\\system.text.json.8.0.4.nupkg.sha512",
+    "C:\\Users\\laris\\.nuget\\packages\\system.text.encodings.web\\9.0.8\\system.text.encodings.web.9.0.8.nupkg.sha512",
+    "C:\\Users\\laris\\.nuget\\packages\\system.text.json\\9.0.8\\system.text.json.9.0.8.nupkg.sha512",
     "C:\\Users\\laris\\.nuget\\packages\\xunit\\2.9.3\\xunit.2.9.3.nupkg.sha512",
     "C:\\Users\\laris\\.nuget\\packages\\xunit.abstractions\\2.0.3\\xunit.abstractions.2.0.3.nupkg.sha512",
     "C:\\Users\\laris\\.nuget\\packages\\xunit.analyzers\\1.18.0\\xunit.analyzers.1.18.0.nupkg.sha512",
@@ -127,17 +127,5 @@
     "C:\\Users\\laris\\.nuget\\packages\\xunit.runner.visualstudio\\3.1.5\\xunit.runner.visualstudio.3.1.5.nupkg.sha512",
     "C:\\Users\\laris\\.nuget\\packages\\zstdsharp.port\\0.7.3\\zstdsharp.port.0.7.3.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1102",
-      "level": "Error",
-      "message": "Unable to find package MongoDB.Driver.Core with version (>= 3.5.0)\r\n  - Found 97 version(s) in nuget.org [ Nearest version: 2.30.0 ]\r\n  - Found 0 version(s) in Microsoft Visual Studio Offline Packages",
-      "projectPath": "C:\\Users\\laris\\VisionHive----DotNet\\VisionHive.API.Test\\VisionHive.API.Test.csproj",
-      "filePath": "C:\\Users\\laris\\VisionHive----DotNet\\VisionHive.API.Test\\VisionHive.API.Test.csproj",
-      "libraryId": "MongoDB.Driver.Core",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  "logs": []
 }

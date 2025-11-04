@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "dgSpecHash": "FsJWBUzrpek=",
-  "success": false,
+  "dgSpecHash": "25l3K3TLEYM=",
+  "success": true,
   "projectFilePath": "C:\\Users\\laris\\VisionHive----DotNet\\VisionHive.API\\VisionHive.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\laris\\.nuget\\packages\\asp.versioning.abstractions\\8.1.0\\asp.versioning.abstractions.8.1.0.nupkg.sha512",
@@ -114,17 +114,5 @@
     "C:\\Users\\laris\\.nuget\\packages\\system.threading.channels\\7.0.0\\system.threading.channels.7.0.0.nupkg.sha512",
     "C:\\Users\\laris\\.nuget\\packages\\zstdsharp.port\\0.7.3\\zstdsharp.port.0.7.3.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1102",
-      "level": "Error",
-      "message": "Unable to find package MongoDB.Driver.Core with version (>= 3.5.0)\r\n  - Found 97 version(s) in nuget.org [ Nearest version: 2.30.0 ]\r\n  - Found 0 version(s) in Microsoft Visual Studio Offline Packages",
-      "projectPath": "C:\\Users\\laris\\VisionHive----DotNet\\VisionHive.API\\VisionHive.API.csproj",
-      "filePath": "C:\\Users\\laris\\VisionHive----DotNet\\VisionHive.API\\VisionHive.API.csproj",
-      "libraryId": "MongoDB.Driver.Core",
-      "targetGraphs": [
-        "net8.0"
-      ]
-    }
-  ]
+  "logs": []
 }

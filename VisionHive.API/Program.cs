@@ -6,28 +6,16 @@ using VisionHive.Infrastructure;
 using VisionHive.API.Extensions;
 using VisionHive.Application.Configs;
 
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Serializers;
-using MongoDB.Driver;
+
 
 namespace VisionHive.API;
 public class Program
 {
     public static void Main(string[] args)
     {
-        // Corrige o erro "GuidSerializer cannot serialize a Guid when GuidRepresentation is Unspecified"
-        // Compatível com MongoDB.Driver >= 3.0.0
-        var pack = new MongoDB.Bson.Serialization.Conventions.ConventionPack
-        {
-            new MongoDB.Bson.Serialization.Conventions.GuidRepresentationConvention(MongoDB.Bson.GuidRepresentation.Standard)
-        };
-        MongoDB.Bson.Serialization.Conventions.ConventionRegistry.Register(
-            "GuidRepresentationFix", pack, _ => true
-        );
         
-                var builder = WebApplication.CreateBuilder(args);
-
+        var builder = WebApplication.CreateBuilder(args);
+        
        // carrega as configurações combinadas (appsettings + appsettings.Development)
        var settings = builder.Configuration.Get<Settings>();
        

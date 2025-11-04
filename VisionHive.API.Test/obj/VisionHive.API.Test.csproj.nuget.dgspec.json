@@ -220,15 +220,7 @@
               "target": "Package",
               "version": "[8.14.0, )"
             },
-            "MongoDB.Bson": {
-              "target": "Package",
-              "version": "[3.5.0, )"
-            },
             "MongoDB.Driver": {
-              "target": "Package",
-              "version": "[3.5.0, )"
-            },
-            "MongoDB.Driver.Core": {
               "target": "Package",
               "version": "[3.5.0, )"
             },
@@ -251,6 +243,10 @@
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
               "version": "[8.14.0, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[9.0.8, )"
             }
           },
           "imports": [

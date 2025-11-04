@@ -36,8 +36,4 @@
         <ProjectReference Include="..\VisionHive.API\VisionHive.API.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Integration\" />
-    </ItemGroup>
-
 </Project>
