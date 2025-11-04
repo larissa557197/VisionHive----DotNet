@@ -79,6 +79,10 @@
               "target": "Package",
               "version": "[4.20.69, )"
             },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[9.0.10, )"
+            },
             "coverlet.collector": {
               "target": "Package",
               "version": "[6.0.0, )"
@@ -246,7 +250,7 @@
             },
             "System.Text.Json": {
               "target": "Package",
-              "version": "[9.0.8, )"
+              "version": "[9.0.10, )"
             }
           },
           "imports": [
@@ -358,6 +362,10 @@
             "Oracle.EntityFrameworkCore": {
               "target": "Package",
               "version": "[9.23.90, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[9.0.10, )"
             }
           },
           "imports": [
@@ -529,6 +537,18 @@
               "target": "Package",
               "version": "[9.0.8, )"
             },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[9.0.10, )"
+            },
+            "Microsoft.Extensions.Configuration.FileExtensions": {
+              "target": "Package",
+              "version": "[9.0.10, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[9.0.10, )"
+            },
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[3.5.0, )"
@@ -536,6 +556,10 @@
             "Oracle.EntityFrameworkCore": {
               "target": "Package",
               "version": "[9.23.90, )"
+            },
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[9.0.10, )"
             }
           },
           "imports": [

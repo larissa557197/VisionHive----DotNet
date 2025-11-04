@@ -684,3 +684,8 @@ C:\Users\laris\VisionHive----DotNet\VisionHive.API\obj\Debug\net8.0\VisionHive.A
 C:\Users\laris\VisionHive----DotNet\VisionHive.API\obj\Debug\net8.0\VisionHive.API.pdb
 C:\Users\laris\VisionHive----DotNet\VisionHive.API\obj\Debug\net8.0\VisionHive.API.genruntimeconfig.cache
 C:\Users\laris\VisionHive----DotNet\VisionHive.API\obj\Debug\net8.0\ref\VisionHive.API.dll
+C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.Configuration.dll
+C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Json.dll
+C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.FileSystemGlobbing.dll
