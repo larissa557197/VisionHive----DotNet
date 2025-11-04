@@ -16,7 +16,7 @@ public class FilialMongoRepository
 
     public FilialMongoRepository()
     {
-        // ⚙️ Lê conexão direto do appsettings.json
+        //  Lê conexão direto do appsettings.json
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json", optional: false)
             .AddJsonFile("appsettings.Development.json", optional: true)
