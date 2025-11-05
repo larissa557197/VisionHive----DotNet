@@ -1,10 +1,14 @@
 ﻿
 
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
 namespace VisionHive.Domain.Entities
 {
     public class Filial
     {
-        
+        [BsonId]
+        [BsonRepresentation(BsonType.String)]
         public Guid Id {  get; set; }
         public string Nome { get; set; }
         public string Bairro { get; set; }

@@ -1,8 +1,13 @@
-﻿namespace VisionHive.Domain.Entities
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
+namespace VisionHive.Domain.Entities
 {
     public class Patio
     {
-        public Patio(){}
+        
+        [BsonId]
+        [BsonRepresentation(BsonType.String)]
         public Guid Id { get;  set; }
         public string Nome { get;  set; }
         public int LimiteMotos { get;  set; } = 100; // limite de 100 motos por patio 
@@ -13,6 +18,7 @@
 
         public ICollection<Moto> Motos { get; set; } = new List<Moto>();
         
+        public Patio(){}
         
         public Patio(string nome, int limiteMotos, Guid filialId)
         {

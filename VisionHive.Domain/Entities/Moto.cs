@@ -1,10 +1,14 @@
-﻿using VisionHive.Domain.Enums;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using VisionHive.Domain.Enums;
 
 namespace VisionHive.Domain.Entities
 {
     public class Moto
     {
-        public Moto(){}
+        
+        [BsonId]
+        [BsonRepresentation(BsonType.String)]
         public Guid Id { get; set; }
         public string? Placa { get; set; }
 
@@ -19,6 +23,7 @@ namespace VisionHive.Domain.Entities
         public Guid PatioId { get; set; }
         public Patio Patio { get; set; }
 
+        public Moto(){}
 
         public Moto(string? placa, string? chassi, string? numeroMotor, Prioridade prioridade, Guid patioId)
         {
