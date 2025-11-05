@@ -15,7 +15,7 @@ public class MotoMongoRepository
     {
         _database = database;
 
-        //  Garante compatibilidade com UUID binário padrão do Mongo
+        //  Garante compatibilidade com UUID binário padrão do MongoDB
         try
         {
             BsonSerializer.RegisterSerializer(typeof(Guid), new GuidSerializer(GuidRepresentation.Standard));
@@ -29,7 +29,7 @@ public class MotoMongoRepository
     }
 
     // CREATE
-    public async Task<Moto> CreateAsync(Moto moto)
+    public virtual async Task<Moto> CreateAsync(Moto moto)
     {
         var patioCollection = _database.GetCollection<Patio>("Patios");
 
@@ -49,7 +49,7 @@ public class MotoMongoRepository
     }
 
     // READ - Todos
-    public async Task<List<Moto>> GetAllAsync()
+    public virtual async Task<List<Moto>> GetAllAsync()
     {
         var motos = await _collection.Find(_ => true).ToListAsync();
 
@@ -77,7 +77,7 @@ public class MotoMongoRepository
     }
 
     // READ - por ID
-    public async Task<Moto?> GetByIdAsync(Guid id)
+    public virtual async Task<Moto?> GetByIdAsync(Guid id)
     {
         // Busca tanto pelo campo Id quanto pelo _id binário (compatível com UUID)
         var filter = Builders<Moto>.Filter.Or(
@@ -108,7 +108,7 @@ public class MotoMongoRepository
     }
 
     // UPDATE
-    public async Task<bool> UpdateAsync(Moto moto)
+    public virtual async Task<bool> UpdateAsync(Moto moto)
     {
         var filter = Builders<Moto>.Filter.Eq(m => m.Id, moto.Id);
         var result = await _collection.ReplaceOneAsync(filter, moto);
@@ -116,7 +116,7 @@ public class MotoMongoRepository
     }
 
     // DELETE
-    public async Task<bool> DeleteAsync(Guid id)
+    public virtual async Task<bool> DeleteAsync(Guid id)
     {
         var result = await _collection.DeleteOneAsync(m => m.Id == id);
         return result.DeletedCount > 0;

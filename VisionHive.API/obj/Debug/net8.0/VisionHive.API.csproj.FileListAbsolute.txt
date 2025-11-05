@@ -524,7 +524,10 @@ C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.En
 C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
 C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.Configuration.dll
 C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Json.dll
 C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
@@ -532,6 +535,8 @@ C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Ex
 C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.HealthChecks.dll
 C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.HealthChecks.Abstractions.dll
 C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Physical.dll
+C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.FileSystemGlobbing.dll
 C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
 C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
 C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
@@ -684,8 +689,3 @@ C:\Users\laris\VisionHive----DotNet\VisionHive.API\obj\Debug\net8.0\VisionHive.A
 C:\Users\laris\VisionHive----DotNet\VisionHive.API\obj\Debug\net8.0\VisionHive.API.pdb
 C:\Users\laris\VisionHive----DotNet\VisionHive.API\obj\Debug\net8.0\VisionHive.API.genruntimeconfig.cache
 C:\Users\laris\VisionHive----DotNet\VisionHive.API\obj\Debug\net8.0\ref\VisionHive.API.dll
-C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.Configuration.dll
-C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.Configuration.FileExtensions.dll
-C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Json.dll
-C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.FileProviders.Physical.dll
-C:\Users\laris\VisionHive----DotNet\VisionHive.API\bin\Debug\net8.0\Microsoft.Extensions.FileSystemGlobbing.dll

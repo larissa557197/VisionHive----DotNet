@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VisionHive.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fbde483f7c3d857c5a55e7b43cdd8a4e890012e2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c555a690c2330d0508625284e21c22637d2b175d")]
 [assembly: System.Reflection.AssemblyProductAttribute("VisionHive.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VisionHive.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

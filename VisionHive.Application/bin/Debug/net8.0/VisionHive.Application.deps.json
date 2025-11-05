@@ -1024,6 +1024,7 @@
         "dependencies": {
           "EntityFramework": "6.5.1",
           "Microsoft.EntityFrameworkCore": "9.0.8",
+          "MongoDB.Driver": "3.5.0",
           "Oracle.EntityFrameworkCore": "9.23.90"
         },
         "runtime": {

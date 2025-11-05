@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
+using Moq;
 using VisionHive.API.Controllers.v2;
 using VisionHive.Application.DTO.Request;
 using VisionHive.Domain.Entities;
@@ -12,10 +14,13 @@ namespace VisionHive.API.Test.Controllers;
 
 public class MotoControllerV2Test
 {
-    // 🔹 Fake repository (sem precisar de Mongo real)
+    //  Fake repository (sem precisar de Mongo real)
     private class FakeMotoMongoRepository : MotoMongoRepository
     {
-        public FakeMotoMongoRepository() : base(null!) { }
+        public FakeMotoMongoRepository()
+            : base(new Mock<IMongoDatabase>().Object) //  mocka o banco para evitar NullReference
+        {
+        }
 
         public Moto? UltimaMotoCriada { get; private set; }
 
@@ -28,7 +33,7 @@ public class MotoControllerV2Test
 
         public override Task<List<Moto>> GetAllAsync()
             => Task.FromResult(new List<Moto>());
-        
+
         public override Task<Moto?> GetByIdAsync(Guid id)
             => Task.FromResult<Moto?>(null);
 
