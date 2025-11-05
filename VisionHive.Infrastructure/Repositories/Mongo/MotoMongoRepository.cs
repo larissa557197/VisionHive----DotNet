@@ -15,7 +15,7 @@ public class MotoMongoRepository
     {
         _database = database;
 
-        // ✅ Garante compatibilidade com UUID binário padrão do Mongo
+        //  Garante compatibilidade com UUID binário padrão do Mongo
         try
         {
             BsonSerializer.RegisterSerializer(typeof(Guid), new GuidSerializer(GuidRepresentation.Standard));
@@ -31,8 +31,21 @@ public class MotoMongoRepository
     // CREATE
     public async Task<Moto> CreateAsync(Moto moto)
     {
+        var patioCollection = _database.GetCollection<Patio>("Patios");
+
+        // Busca o pátio correspondente
+        var patio = await patioCollection
+            .Find(p => p.Id == moto.PatioId)
+            .FirstOrDefaultAsync();
+
+        if (patio == null)
+            throw new Exception($"Pátio com ID {moto.PatioId} não encontrado.");
+
+        // Define a filial automaticamente
+        moto.FilialId = patio.FilialId;
+
         await _collection.InsertOneAsync(moto);
-        return moto;
+        return moto;;
     }
 
     // READ - Todos
