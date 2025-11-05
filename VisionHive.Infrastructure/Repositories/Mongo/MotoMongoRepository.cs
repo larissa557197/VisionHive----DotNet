@@ -8,65 +8,104 @@ namespace VisionHive.Infrastructure.Repositories.Mongo;
 
 public class MotoMongoRepository
 {
+    private readonly IMongoDatabase _database;
     private readonly IMongoCollection<Moto> _collection;
 
-    public MotoMongoRepository(IMongoDatabase? database)
+    public MotoMongoRepository(IMongoDatabase database)
     {
-        /*
-         * try
+        _database = database;
+
+        // ✅ Garante compatibilidade com UUID binário padrão do Mongo
+        try
         {
             BsonSerializer.RegisterSerializer(typeof(Guid), new GuidSerializer(GuidRepresentation.Standard));
         }
         catch
         {
-            // Ignora se já foi registrado
+            // ignora se já tiver sido registrado
         }
 
-        _collection = database.GetCollection<Moto>("Motos");
-         */
-        if (database != null)
-            _collection = database.GetCollection<Moto>("Motos");
-        else
-            _collection = null!;
+        _collection = _database.GetCollection<Moto>("Motos");
     }
-    
+
     // CREATE
-    public virtual async Task<Moto> CreateAsync(Moto moto)
+    public async Task<Moto> CreateAsync(Moto moto)
     {
         await _collection.InsertOneAsync(moto);
         return moto;
     }
-    
+
     // READ - Todos
-    public virtual async Task<List<Moto>> GetAllAsync()
+    public async Task<List<Moto>> GetAllAsync()
     {
-        return await _collection.Find(p=>true).ToListAsync();
+        var motos = await _collection.Find(_ => true).ToListAsync();
+
+        // Inclui o Pátio e a Filial relacionados
+        var patioCollection = _database.GetCollection<Patio>("Patios");
+        var filialCollection = _database.GetCollection<Filial>("Filiais");
+
+        foreach (var moto in motos)
+        {
+            // Busca o Pátio correspondente
+            moto.Patio = await patioCollection
+                .Find(p => p.Id == moto.PatioId)
+                .FirstOrDefaultAsync();
+
+            // Busca a Filial do Pátio
+            if (moto.Patio != null)
+            {
+                moto.Patio.Filial = await filialCollection
+                    .Find(f => f.Id == moto.Patio.FilialId)
+                    .FirstOrDefaultAsync();
+            }
+        }
+
+        return motos;
     }
-    
+
     // READ - por ID
-    public virtual async Task<Moto?> GetByIdAsync(Guid id)
+    public async Task<Moto?> GetByIdAsync(Guid id)
     {
+        // Busca tanto pelo campo Id quanto pelo _id binário (compatível com UUID)
         var filter = Builders<Moto>.Filter.Or(
             Builders<Moto>.Filter.Eq(m => m.Id, id),
             Builders<Moto>.Filter.Eq("_id", new BsonBinaryData(id, GuidRepresentation.Standard))
         );
 
-        return await _collection.Find(filter).FirstOrDefaultAsync();
+        var moto = await _collection.Find(filter).FirstOrDefaultAsync();
+        if (moto == null) return null;
+
+        var patioCollection = _database.GetCollection<Patio>("Patios");
+        var filialCollection = _database.GetCollection<Filial>("Filiais");
+
+        // Carrega o Pátio
+        moto.Patio = await patioCollection
+            .Find(p => p.Id == moto.PatioId)
+            .FirstOrDefaultAsync();
+
+        // Carrega a Filial do Pátio (se existir)
+        if (moto.Patio != null)
+        {
+            moto.Patio.Filial = await filialCollection
+                .Find(f => f.Id == moto.Patio.FilialId)
+                .FirstOrDefaultAsync();
+        }
+
+        return moto;
     }
-    
+
     // UPDATE
-    public virtual async Task<bool> UpdateAsync(Moto moto)
+    public async Task<bool> UpdateAsync(Moto moto)
     {
         var filter = Builders<Moto>.Filter.Eq(m => m.Id, moto.Id);
         var result = await _collection.ReplaceOneAsync(filter, moto);
         return result.ModifiedCount > 0;
     }
-    
+
     // DELETE
-    public virtual async Task<bool> DeleteAsync(Guid id)
+    public async Task<bool> DeleteAsync(Guid id)
     {
-        var result = await _collection.DeleteOneAsync(p => p.Id == id);
+        var result = await _collection.DeleteOneAsync(m => m.Id == id);
         return result.DeletedCount > 0;
     }
-    
 }
