@@ -18,7 +18,7 @@ public class FilialMongoRepository
     {
         _database = database;
 
-        // ✅ Garante compatibilidade com UUID binário padrão do Mongo
+        //  Garante compatibilidade com UUID binário padrão do Mongo
         try
         {
             BsonSerializer.RegisterSerializer(typeof(Guid), new GuidSerializer(GuidRepresentation.Standard));
@@ -43,16 +43,23 @@ public class FilialMongoRepository
     {
         var filiais = await _collection.Find(_ => true).ToListAsync();
 
-        // Inclui os pátios correspondentes
         var patioCollection = _database.GetCollection<Patio>("Patios");
+        var motoCollection = _database.GetCollection<Moto>("Motos");
 
         foreach (var filial in filiais)
         {
-            var patios = await patioCollection
+            // Carrega os pátios da filial
+            filial.Patios = await patioCollection
                 .Find(p => p.FilialId == filial.Id)
                 .ToListAsync();
 
-            filial.Patios = patios;
+            // Para cada pátio, carrega as motos
+            foreach (var patio in filial.Patios)
+            {
+                patio.Motos = await motoCollection
+                    .Find(m => m.PatioId == patio.Id)
+                    .ToListAsync();
+            }
         }
 
         return filiais;
@@ -61,7 +68,6 @@ public class FilialMongoRepository
     // READ - por ID
     public async Task<Filial?> GetByIdAsync(Guid id)
     {
-        // Busca tanto pelo campo Id quanto pelo _id binário (compatível com UUID)
         var filter = Builders<Filial>.Filter.Or(
             Builders<Filial>.Filter.Eq(f => f.Id, id),
             Builders<Filial>.Filter.Eq("_id", new BsonBinaryData(id, GuidRepresentation.Standard))
@@ -70,9 +76,15 @@ public class FilialMongoRepository
         var filial = await _collection.Find(filter).FirstOrDefaultAsync();
         if (filial == null) return null;
 
-        // Inclui os pátios relacionados
         var patioCollection = _database.GetCollection<Patio>("Patios");
+        var motoCollection = _database.GetCollection<Moto>("Motos");
+
         filial.Patios = await patioCollection.Find(p => p.FilialId == id).ToListAsync();
+
+        foreach (var patio in filial.Patios)
+        {
+            patio.Motos = await motoCollection.Find(m => m.PatioId == patio.Id).ToListAsync();
+        }
 
         return filial;
     }
