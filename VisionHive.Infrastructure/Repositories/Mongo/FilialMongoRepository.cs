@@ -11,31 +11,21 @@ namespace VisionHive.Infrastructure.Repositories.Mongo;
 public class FilialMongoRepository
 {
     
-    private readonly IMongoDatabase _database;
+     private readonly IMongoDatabase _database;
     private readonly IMongoCollection<Filial> _collection;
 
-    public FilialMongoRepository()
+    public FilialMongoRepository(IMongoDatabase database)
     {
-        //  Lê conexão direto do appsettings.json
-        var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", optional: false)
-            .AddJsonFile("appsettings.Development.json", optional: true)
-            .Build();
+        _database = database;
 
-        var connectionString = configuration.GetConnectionString("MongoDB") ?? "mongodb://localhost:27017";
-        var databaseName = configuration["MongoSettings:DatabaseName"] ?? "VisionHiveDB";
-
-        var client = new MongoClient(connectionString);
-        _database = client.GetDatabase(databaseName);
-
-        // Garante compatibilidade com UUID binário padrão do MongoDB
+        // ✅ Garante compatibilidade com UUID binário padrão do Mongo
         try
         {
             BsonSerializer.RegisterSerializer(typeof(Guid), new GuidSerializer(GuidRepresentation.Standard));
         }
         catch
         {
-            // Ignora se já foi registrado
+            // ignora se já tiver sido registrado (versões antigas não têm verificação)
         }
 
         _collection = _database.GetCollection<Filial>("Filiais");
@@ -69,11 +59,18 @@ public class FilialMongoRepository
     }
 
     // READ - por ID
-    public async Task<Filial> GetByIdAsync(Guid id)
+    public async Task<Filial?> GetByIdAsync(Guid id)
     {
-        var filial = await _collection.Find(f => f.Id == id).FirstOrDefaultAsync();
+        // Busca tanto pelo campo Id quanto pelo _id binário (compatível com UUID)
+        var filter = Builders<Filial>.Filter.Or(
+            Builders<Filial>.Filter.Eq(f => f.Id, id),
+            Builders<Filial>.Filter.Eq("_id", new BsonBinaryData(id, GuidRepresentation.Standard))
+        );
+
+        var filial = await _collection.Find(filter).FirstOrDefaultAsync();
         if (filial == null) return null;
 
+        // Inclui os pátios relacionados
         var patioCollection = _database.GetCollection<Patio>("Patios");
         filial.Patios = await patioCollection.Find(p => p.FilialId == id).ToListAsync();
 
@@ -91,7 +88,8 @@ public class FilialMongoRepository
     // DELETE
     public async Task<bool> DeleteAsync(Guid id)
     {
-        var result = await _collection.DeleteOneAsync(p => p.Id == id);
+        var result = await _collection.DeleteOneAsync(f => f.Id == id);
         return result.DeletedCount > 0;
     }
 }
+    
